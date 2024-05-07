@@ -20,7 +20,7 @@ export default function Home() {
    }) 
 
   return (
-   <div>
+   <div className="bg-[url('/home/hassan/Esports/Esports-Project-frontend/esports-front/public/LOGO.png')] bg-repeat ">
     <NavBar />
       <h1>Hello every one</h1>
 
