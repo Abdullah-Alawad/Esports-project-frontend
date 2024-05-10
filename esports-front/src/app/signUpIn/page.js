@@ -5,6 +5,7 @@ import NavBar from '../components/NavBar'
 const SignUpIn = () => {
   const [signInData, setSignInData] = useState([]);
   const [signUpData, setSignUpData] = useState([]);
+  const [signUpErorrs, setSignUpErrors] = useState([]);
   const [alreadySignedUp, setAlreadySignedUp] = useState(false);
 
   function handleSignUpDataChange(event){
@@ -25,6 +26,20 @@ const SignUpIn = () => {
 
   async function handleSignUpSubmit(event){
     event.preventDefault();
+    //validation
+    const properties = ["userName", "email", "password1", "password2", "birthData", "phoneNumber", "phoneNumber", "image"];
+    properties.forEach(property => {
+      if(property){
+        
+      }else{
+
+      }
+    });
+
+
+
+
+
     const options={
       method:"POST",
       headers: {
