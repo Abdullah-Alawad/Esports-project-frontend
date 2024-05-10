@@ -11,16 +11,16 @@ export default function Home() {
     },[])
     
    const tournamentsCards = tournamentsData && tournamentsData.map(tournament=>{
-    return <div key ={tournament._id} className="rounded-xl bg-teal-400">
-      <img src={tournament.image} className="w-28 h-56 rounded-xl" />
-      <h1>{tournament.game}</h1>
-      <h1>Prize: {tournament.prize}</h1>
-      <h1>Duration: {tournament.duration}</h1>
+    return <div key ={tournament._id} className="rounded-xl bg-[url('../../public/bg1.png')] bg-repeat p-3 ">
+      <img src={tournament.image} className="w-36 h-56 rounded-xl m-auto shadow-2xl mb-2" />
+      <h1 className="text-2xl font-bold text-center">{tournament.game}</h1>
+      <h1 className="text-xl font-semibold">Prize: <span className="font-bold">{tournament.prize}</span></h1>
+      <h1 className="text-xl font-semibold">Duration: <span className="font-bold">{tournament.duration}</span></h1>
     </div>
    }) 
 
   return (
-   <div className="bg-[url('/home/hassan/Esports/Esports-Project-frontend/esports-front/public/LOGO.png')] bg-repeat ">
+   <div className="bg-[url('../../public/bg2.png')] bg-repeat pt-10">
     <NavBar />
       <h1>Hello every one</h1>
 
