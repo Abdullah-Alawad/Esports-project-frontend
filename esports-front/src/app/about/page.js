@@ -1,15 +1,15 @@
-import React from 'react'
-import NavBar from '../components/NavBar'
-import Image from 'next/image'
+import React from 'react';
+import NavBar from '../components/NavBar';
+import Image from 'next/image';
 import Link from 'next/link';
 import Footer from '../components/Footer';
 
 import abdullah from "../../../public/abdullah.jpg";
 import hassan from "../../../public/hassan2.JPG";
-import logo from '../../../public/logo-t.png'
-import mini1 from '../../../public/mini1-t.png'
-import mini2 from '../../../public/mini2-t.png'
-import controller from '../../../public/controller-t.png'
+import logo from '../../../public/logo-t.png';
+import mini1 from '../../../public/mini1-t.png';
+import mini2 from '../../../public/mini2-t.png';
+import controller from '../../../public/controller-t.png';
 
 
 const about = () => {
@@ -49,7 +49,7 @@ const about = () => {
         </div>
       </div>
       <div className='flex flex-row justify-between'>
-        <Image src={mini1} alt='Abdullah Alawad' className='rounded-2xl  w-[200px] h-[200px] mt-24 ml-20'/>
+        <Image src={mini1} alt='mini1' className='rounded-2xl  w-[200px] h-[200px] mt-24 ml-20'/>
         <div>
           <div className='text-5xl font-extrabold text-center'>Our Mission</div>
           <div className="font-bold text-3xl mx-40 mt-10 mb-5 px-5 pt-5 leading-relaxed h-fit pb-4 text-center  bg-[url('../../public/bg1.png')] bg-repeat rounded-xl shadow-2xl">
@@ -58,12 +58,12 @@ const about = () => {
             gamers can connect, compete, and celebrate their passion for gaming.
           </div>
         </div>
-        <Image src={mini2} alt='Abdullah Alawad'  className='rounded-2xl  w-[200px] h-[200px] mt-24 mr-20'/>
+        <Image src={mini2} alt='mini2'  className='rounded-2xl  w-[200px] h-[200px] mt-24 mr-20'/>
       </div>
-      <div >
+      <div>
         <div className='text-5xl font-extrabold text-center mt-10'>Join Us Today!</div>
         <div className='flex flex-col items-center'>
-          <Image src={controller} alt='Abdullah Alawad'  className='rounded-2xl  w-[300px] h-[250px]'/>
+          <Image src={controller} alt='controller'  className='rounded-2xl  w-[300px] h-[250px]'/>
         </div>
         <div className="font-bold text-2xl mx-96 mb-16 px-5 pt-5 leading-relaxed h-fit pb-4 text-center  bg-[url('../../public/bg1.png')] bg-repeat rounded-xl shadow-2xl">
           Whether you're a casual gamer looking for some friendly competition or a seasoned pro seeking to test your skills
