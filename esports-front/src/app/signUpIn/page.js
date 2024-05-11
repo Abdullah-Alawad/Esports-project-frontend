@@ -1,7 +1,7 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import NavBar from '../components/NavBar'
-
+import { TokenContext } from "../layout";
 const SignUpIn = () => {
   const [signInData, setSignInData] = useState([]);
   const [signUpData, setSignUpData] = useState({
@@ -14,6 +14,7 @@ const SignUpIn = () => {
   });
   const [signUpErrors, setSignUpErrors] = useState({});
   const [alreadySignedUp, setAlreadySignedUp] = useState(false);
+  const {setHaveToken} = useContext(TokenContext)
 
   function handleSignUpDataChange(event){
     const propertyName = event.target.name;
@@ -86,6 +87,7 @@ const SignUpIn = () => {
       const signUpData  = await signUpResponse.json();
       const token = signUpData;
       localStorage.setItem("token",token);
+      setHaveToken(true);
       //redirect to home page
       }catch(err ){
         console.log(err);
@@ -107,6 +109,7 @@ const SignUpIn = () => {
     const signInData  = await signInResponse.json();
     const token = signInData;
     localStorage.setItem("token",token);
+    setHaveToken(true);
     //redirect to home page
     alert("hello");
     }catch(err ){

@@ -2,10 +2,14 @@ import Link from 'next/link'
 import React from 'react'
 import logo from '../../../public/logo-t.png'
 import Image from 'next/image'
-
-
+import { TokenContext } from "../layout";
+import { useContext, useState } from 'react';
 
 const NavBar = () => {
+  const {haveToken, setHaveToken} = useContext(TokenContext)
+
+
+
   return (
     <div className="flex ">
          <div className="bg-[url('../../public/bg1.png')] bg-repeat rounded-full ml-5 px-1 py-1 max-w-[170px] z-10 border-y-8 border-l-8 border-r-8 border-violet-900/25 shadow-2xl" >
@@ -22,8 +26,9 @@ const NavBar = () => {
 
           {/* make this conditional rendering based on if user signed in */}
           <div className='flex gap-8 font-extrabold text-3xl mr-10 text-black'>
-            <Link href={"/profile"} className=' hover:text-slate-200'>Profile</Link>
-            <Link href={"/signUpIn"} className=' hover:text-slate-200'>Sign in</Link>
+            {haveToken &&<Link href={"/profile"} className=' hover:text-slate-200'>Profile</Link>}
+            {!haveToken &&<Link href={"/signUpIn"} className=' hover:text-slate-200'>Sign in</Link>}
+            {haveToken &&<Link href={"/"} onClick={()=>{localStorage.removeItem("token"); setHaveToken(false)}} className=' hover:text-slate-200'>Sign Out</Link>}
           </div>
          </div>
     </div>
