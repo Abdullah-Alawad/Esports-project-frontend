@@ -34,56 +34,57 @@ const SignUpIn = () => {
 
   async function handleSignUpSubmit(event){
     event.preventDefault();
-
+    const errors ={};
     if (signUpData.userName.length < 6 || signUpData.userName.length > 25) {
-      signUpErrors.userName = 'Username must be between 6 and 25 characters';
+      errors.userName = 'Username must be between 6 and 25 characters';
     }else{
-      delete signUpErrors.userName;
+      delete errors.userName;
     }
 
 
     if (signUpData.password1.length < 8) {
-      signUpErrors.password1 = 'Password must be at least 8 characters long';
+      errors.password1 = 'Password must be at least 8 characters long';
     } else if (!/(?=.*[A-Z])(?=.*\d.*\d)(?=.*[!@#$%^&*]).{8,}/.test(signUpData.password1)) {
-      signUpErrors.password1 = 'Password must contain a capital letter, 2 numbers, and a special character';
+      errors.password1 = 'Password must contain a capital letter, 2 numbers, and a special character';
     }else{
-      delete signUpErrors.password1;
+      delete errors.password1;
     }
 
 
     if (signUpData.password1 !== signUpData.password2) {
-      signUpErrors.password2 = 'Passwords do not match';
+      errors.password2 = 'Passwords do not match';
     }else{
-      delete signUpErrors.password2;
+      delete errors.password2;
     }
 
     if (!/^07[789]\d{7}$/.test(signUpData.phoneNumber)) {
-      signUpErrors.phoneNumber = 'Phone number must be in the format 07[7,8,9]XXXXXXX';
+      errors.phoneNumber = 'Phone number must be in the format 07[7,8,9]XXXXXXX';
     }
     else{
-      delete signUpErrors.phoneNumber;
+      delete errors.phoneNumber;
     }
     
     const currentDate = new Date();
     const birthDate = new Date(signUpData.dateOfBirth);
     const minBirthDate = new Date(currentDate.getFullYear() - 12, currentDate.getMonth(), currentDate.getDate());
     if (birthDate > minBirthDate) {
-      signUpErrors.dateOfBirth = 'You must be at least 12 years old to sign up';
+      errors.dateOfBirth = 'You must be at least 12 years old to sign up';
     }else{
-      delete signUpErrors.birthDate;
+      delete errors.birthDate;
     }
-
-    if( Object.keys(signUpErrors).length < 1)
+    setSignUpErrors({...errors});
+    if( Object.keys(errors).length < 1)
       {
         const options={
         method:"POST",
         headers: {
             "Content-Type": "application/json",
+            "access-control-allow-origin" : "*",
           },
         body: JSON.stringify(signUpData)
       }
       try{
-      const signUpResponse = await fetch("https://esports-project-backend-production-d825.up.railway.app/user/signup",options)
+      const signUpResponse = await fetch("https://selfless-charisma-production.up.railway.app/user/signup",options)
       const signUpData  = await signUpResponse.json();
       const token = signUpData;
       localStorage.setItem("token",token);
@@ -101,13 +102,15 @@ const SignUpIn = () => {
       method:"POST",
       headers: {
           "Content-Type": "application/json",
+          "access-control-allow-origin" : "*",
         },
       body: JSON.stringify(signInData)
     }
     try{
-    const signInResponse = await fetch("https://esports-project-backend-production-d825.up.railway.app/user/login",options)
+    const signInResponse = await fetch("https://selfless-charisma-production.up.railway.app/user/login",options)
     const signInData  = await signInResponse.json();
     const token = signInData;
+    console.log(token);
     localStorage.setItem("token",token);
     setHaveToken(true);
     //redirect to home page
