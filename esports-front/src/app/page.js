@@ -4,6 +4,7 @@ import NavBar from "./components/NavBar";
 import Link from "next/link";
 
 export default function Home() {
+
     const [tournamentsData, setTournamentsData] = useState([]);
 
     useEffect(()=>{
@@ -36,7 +37,7 @@ export default function Home() {
 
 
   async function getTournamentsData(){
-    const tournamentResponse = await fetch("https://esports-project-backend-production-d825.up.railway.app/tournament/tournaments");
+    const tournamentResponse = await fetch("https://selfless-charisma-production.up.railway.app/tournament/tournaments");
     const tournamentData = await tournamentResponse.json();
     setTournamentsData(tournamentData);
   }
