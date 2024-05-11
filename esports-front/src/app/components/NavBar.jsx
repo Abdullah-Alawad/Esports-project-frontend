@@ -1,3 +1,4 @@
+"use client"
 import Link from 'next/link'
 import React from 'react'
 import logo from '../../../public/logo-t.png'
@@ -7,9 +8,6 @@ import { useContext, useState } from 'react';
 
 const NavBar = () => {
   const {haveToken, setHaveToken} = useContext(TokenContext)
-
-
-
   return (
     <div className="flex ">
          <div className="bg-[url('../../public/bg1.png')] bg-repeat rounded-full ml-5 px-1 py-1 max-w-[170px] z-10 border-y-8 border-l-8 border-r-8 border-violet-900/25 shadow-2xl" >

@@ -23,8 +23,6 @@ export default function Home() {
   return (
    <div className="bg-[url('../../public/bg2.png')] bg-repeat pt-10">
     <NavBar />
-      <h1>Hello every one</h1>
-
     {/* ongoing tournaments */}
       <div>
         <div className="flex m-8 p-3 flex-wrap gap-10">
