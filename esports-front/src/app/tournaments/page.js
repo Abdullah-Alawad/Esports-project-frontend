@@ -4,8 +4,9 @@ import { TokenContext } from "../layout";
 import React from 'react'
 import NavBar from "../components/NavBar";
 import Link from "next/link";
-
+import { useRouter } from "next/navigation";
 const Tournament = () => {
+  const router = useRouter();
   const [tournamentsData, setTournamentsData] = useState([]);
   const {haveToken} = useContext(TokenContext)
     useEffect(()=>{
@@ -25,7 +26,7 @@ const Tournament = () => {
         tournamentId:tournamentId
       })
       }
-      try{
+      try{  
       const joinResponse = await fetch("https://selfless-charisma-production.up.railway.app/user/joinTournament",options);
       const joinData = await joinResponse.json();
       alert(joinData.message)
