@@ -4,7 +4,7 @@ import logo from "../../../public/logo-t.png"
 
 function Footer(){
     return(
-      <div className="flex flex-row justify-around bg-[url('../../public/bg1.png')] bg-repeat text-white border-t-8 border-yellow-300/70">
+      <div className="flex flex-row justify-around bg-[url('../../public/bg1.png')] bg-repeat w-full text-white border-t-8 border-yellow-300/70">
         <Image src={logo} alt='FilmFusion Logo' width={300}
             height={36} className='float left p-2' />
         <div className="m-10">
