@@ -29,7 +29,7 @@ const about = () => {
                 </div>
           </div>
           <div>
-            <div className="font-bold text-3xl mx-48 mt-10 mb-5 px-5 pt-5 leading-relaxed h-fit pb-4 text-center  bg-[url('../../public/bg1.png')] bg-repeat rounded-xl shadow-2xl">
+            <div className="text-slate-200 font-bold text-3xl mx-48 mt-10 mb-5 px-5 pt-5 leading-relaxed h-fit pb-4 text-center  bg-[url('../../public/bg1.png')] bg-repeat rounded-xl shadow-2xl">
                 Welcome to EplayJo, the premier destination for gamers across Jordan!
                 Founded by Abdullah Alawad and Hassan AbuGhareeb, EplayJo is dedicated to providing a platform where
                 players can engage in official, organized tournaments, as well as create their own fun and
@@ -53,7 +53,7 @@ const about = () => {
         <Image src={mini1} alt='mini1' className='rounded-2xl  w-[200px] h-[200px] mt-24 ml-20'/>
         <div>
           <div className='text-5xl font-extrabold text-center'>Our Mission</div>
-          <div className="font-bold text-3xl mx-40 mt-10 mb-5 px-5 pt-5 leading-relaxed h-fit pb-4 text-center  bg-[url('../../public/bg1.png')] bg-repeat rounded-xl shadow-2xl">
+          <div className="text-slate-200 font-bold text-3xl mx-40 mt-10 mb-5 px-5 pt-5 leading-relaxed h-fit pb-4 text-center  bg-[url('../../public/bg1.png')] bg-repeat rounded-xl shadow-2xl">
             At EplayJo, our mission is to foster a thriving gaming community in Jordan by offering a diverse range
             of gaming experiences for players of all skill levels. We aim to create an inclusive environment where
             gamers can connect, compete, and celebrate their passion for gaming.
@@ -66,7 +66,7 @@ const about = () => {
         <div className='flex flex-col items-center'>
           <Image src={controller} alt='controller'  className='rounded-2xl  w-[300px] h-[250px]'/>
         </div>
-        <div className="font-bold text-2xl mx-96 mb-16 px-5 pt-5 leading-relaxed h-fit pb-4 text-center  bg-[url('../../public/bg1.png')] bg-repeat rounded-xl shadow-2xl">
+        <div className=" text-slate-200 font-bold text-2xl mx-96 mb-16 px-5 pt-5 leading-relaxed h-fit pb-4 text-center  bg-[url('../../public/bg1.png')] bg-repeat rounded-xl shadow-2xl">
           Whether you're a casual gamer looking for some friendly competition or a seasoned pro seeking to test your skills
           against the best, EplayJo welcomes you to join our growing community. Sign up now to start participating in tournaments,
           connecting with fellow gamers, and unlocking a world of gaming possibilities!

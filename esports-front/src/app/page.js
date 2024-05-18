@@ -29,7 +29,7 @@ export default function Home() {
     <NavBar />
       <h1 className="bg-[url('../../public/bg1.png')] bg-repeat font-extrabold text-6xl text-center mb-5 px-8 py-5 rounded-xl text-yellow-300/90 shadow-2xl border-8 border-violet-600/50">WELCOME TO EplayJO</h1>
       <div className="relative ">
-        <Image src={intro} alt="intro" className="rounded-2xl shadow-2xl absolute z-10 min-w-[1400px] min-h-[790px] top-5 -left-[480px]"/>
+        <Image src={intro} alt="intro" unoptimized className="rounded-2xl shadow-2xl absolute z-10 min-w-[1400px] min-h-[790px] top-5 -left-[480px] border-8 border-violet-600/50"/>
         <Image src={logo} alt="logo" className="relative z-20 max-h-[440px] max-w-[440px] top-[199px] left-[2px]"/>
       </div>
     {/* ongoing tournaments */}
