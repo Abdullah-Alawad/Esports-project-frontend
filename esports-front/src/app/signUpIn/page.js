@@ -8,7 +8,7 @@ import { TokenContext } from "../layout";
 const SignUpIn = () => {
   const [signInData, setSignInData] = useState([]);
   const [signUpData, setSignUpData] = useState({
-    userName: '',
+    username: '',
     email: '',
     password1: '',
     password2: '',
@@ -16,6 +16,7 @@ const SignUpIn = () => {
     phoneNumber: ''
   });
   const [signUpErrors, setSignUpErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   const [alreadySignedUp, setAlreadySignedUp] = useState(false);
   const {setHaveToken} = useContext(TokenContext)
 
@@ -26,6 +27,10 @@ const SignUpIn = () => {
       {...signUpData, [propertyName]:propertyValue }
     )
   }
+
+  const toggleShowPassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
 
   function handleSignInDataChange(event){
     const propertyName = event.target.name;
@@ -38,10 +43,10 @@ const SignUpIn = () => {
   async function handleSignUpSubmit(event){
     event.preventDefault();
     const errors ={};
-    if (signUpData.userName.length < 6 || signUpData.userName.length > 25) {
-      errors.userName = 'Username must be between 6 and 25 characters*';
+    if (signUpData.username.length < 6 || signUpData.username.length > 25) {
+      errors.username = 'Username must be between 6 and 25 characters*';
     }else{
-      delete errors.userName;
+      delete errors.username;
     }
 
 
@@ -142,9 +147,16 @@ const SignUpIn = () => {
               {/* <label>Email: </label> */}
               <input type='email' placeholder='email*' name='email' value={signInData.email} onChange={handleSignInDataChange} className="placeholder-yellow-300 bg-[url('../../public/bg2.png')] bg-repeat rounded-3xl shadow-2xl py-6 px-11 border-4 border-yellow-300"/>
               </div>
-            <div className='flex gap-5'>
-              {/* <label>Password: </label> */}
-              <input type='password' placeholder='password*' name='password' value={signInData.password} onChange={handleSignInDataChange} className="placeholder-yellow-300 bg-[url('../../public/bg2.png')] bg-repeat rounded-3xl shadow-2xl py-6 px-11 border-4 border-yellow-300"/>
+            <div className='flex flex-col gap-5'>
+              {/* <label>Password: </label> */}{showPassword? 
+                (<input type='text' placeholder='password*' name='password1' value={signUpData.password1} onChange={handleSignUpDataChange} className="placeholder-yellow-300 bg-[url('../../public/bg2.png')] bg-repeat rounded-3xl shadow-2xl py-6 px-11 border-4 border-yellow-300"/>)
+                :
+                (<input type='password' placeholder='password*' name='password1' value={signUpData.password1} onChange={handleSignUpDataChange} className="placeholder-yellow-300 bg-[url('../../public/bg2.png')] bg-repeat rounded-3xl shadow-2xl py-6 px-11 border-4 border-yellow-300"/>)
+                }
+                <div className='translate-x-8 -translate-y-4'>
+                  <input type='checkbox' checked={showPassword} onChange={toggleShowPassword} className='w-5 h-5 text-yellow-400 accent-yellow-300 bg-gray-100 border-gray-300 rounded focus:ring-yellow-500 dark:focus:ring-yellow-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'/>
+                  <label className='text-xl ml-2 mb-2'>show password</label>
+                </div>
             </div>
             <input className="text-violet-900 bg-[url('../../public/bg2.png')] bg-repeat hover:bg-[url('../../public/bg1.png')] hover:bg-repeat border-8 border-violet-800 rounded-3xl shadow-2xl py-6 px-11 cursor-pointer	" type='submit' value='Sign In' />
             <div className="flex bg-[url('../../public/bg2.png')] bg-repeat px-10 py-5 rounded-full shadow-2xl">
@@ -160,37 +172,45 @@ const SignUpIn = () => {
           <div>
             <div className="flex justify-center  bg-[url('../../public/bg2.png')] bg-repeat rounded-3xl shadow-2xl w-[1100px]">
               <Image src={logo} className='w-[150px] mr-7' />
-              <div className='font-extrabold text-7xl mb-6 mt-7 '>Sign up</div>
+              <div className='text-yellow-300 font-extrabold text-7xl mb-6 mt-7 '>Sign up</div>
             </div>
             <form className='flex flex-col items-center gap-8 font-bold text-3xl ml-10 mt-10 text-yellow-300' onSubmit={handleSignUpSubmit}>
-              <div className='flex  gap-5'>
+              <div className='  gap-5'>
                 {/* <label className=''>User name: </label> */}
-                <input type='text' placeholder='username*' name='userName' value={signUpData.userName} onChange={handleSignUpDataChange} className="placeholder-yellow-300 bg-[url('../../public/bg2.png')] bg-repeat rounded-3xl shadow-2xl py-6 px-11 border-4 border-yellow-300"/>
-                {signUpErrors.userName &&<div className='text-red-900 max-w-[530px]'>{signUpErrors.userName}</div>}
+                <input type='text' placeholder='username*' name='username' value={signUpData.username} onChange={handleSignUpDataChange} className="placeholder-yellow-300 bg-[url('../../public/bg2.png')] bg-repeat rounded-3xl shadow-2xl py-6 px-11 border-4 border-yellow-300"/>
+                {signUpErrors.username &&<div className='text-xl text-red-900 max-w-[530px]'>{signUpErrors.username}</div>}
               </div>
               <div className='flex gap-36'>
                 {/* <label>Email: </label> */}
                 <input type='email' placeholder='email*' name='email' value={signUpData.email} onChange={handleSignUpDataChange} className="placeholder-yellow-300 bg-[url('../../public/bg2.png')] bg-repeat rounded-3xl shadow-2xl py-6 px-11 border-4 border-yellow-300"/>
               </div>
-              <div className='flex  gap-5'>
+              <div className='flex flex-col gap-5'>
                 {/* <label>Password: </label> */}
-                <input type='password' placeholder='password*' name='password1' value={signUpData.password1} onChange={handleSignUpDataChange} className="placeholder-yellow-300 bg-[url('../../public/bg2.png')] bg-repeat rounded-3xl shadow-2xl py-6 px-11 border-4 border-yellow-300"/>
-                {signUpErrors.password1 &&<div className='text-red-900 max-w-[530px]'>{signUpErrors.password1}</div>}
+                {showPassword? 
+                (<input type='text' placeholder='password*' name='password1' value={signUpData.password1} onChange={handleSignUpDataChange} className="placeholder-yellow-300 bg-[url('../../public/bg2.png')] bg-repeat rounded-3xl shadow-2xl py-6 px-11 border-4 border-yellow-300"/>)
+                :
+                (<input type='password' placeholder='password*' name='password1' value={signUpData.password1} onChange={handleSignUpDataChange} className="placeholder-yellow-300 bg-[url('../../public/bg2.png')] bg-repeat rounded-3xl shadow-2xl py-6 px-11 border-4 border-yellow-300"/>)
+                }
+                <div className='translate-x-8 -translate-y-4'>
+                  <input type='checkbox' checked={showPassword} onChange={toggleShowPassword} className='w-5 h-5 text-yellow-400 accent-yellow-300 bg-gray-100 border-gray-300 rounded focus:ring-yellow-500 dark:focus:ring-yellow-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'/>
+                  <label className='text-xl ml-2 mb-2'>show password</label>
+                </div>
+                {signUpErrors.password1 &&<div className='text-xl text-red-900 max-w-[530px]'>{signUpErrors.password1}</div>}
               </div>
-              <div className='flex gap-5'>
+              <div className=' gap-5'>
                 {/* <label>Confirm password: </label> */}
                 <input type='password' placeholder='confirm password*' name='password2' value={signUpData.password2} onChange={handleSignUpDataChange} className="placeholder-yellow-300 bg-[url('../../public/bg2.png')] bg-repeat rounded-3xl shadow-2xl py-6 px-11 border-4 border-yellow-300"/>
-                {signUpErrors.password2 &&<div className='text-red-900 max-w-[530px]'>{signUpErrors.password2}</div>}
+                {signUpErrors.password2 &&<div className='text-xl text-red-900 max-w-[530px]'>{signUpErrors.password2}</div>}
               </div>
               <div className=' gap-5'>
                 <label className='block'>Birth date </label>
                 <input type='date' name='dateOfBirth' value={signUpData.dateOfBirth} onChange={handleSignUpDataChange} className="placeholder-cyan-400 text-yellow-300 bg-[url('../../public/bg2.png')] bg-repeat rounded-3xl shadow-2xl py-6 px-32 border-4 border-yellow-300"/>
-                {signUpErrors.birthDate &&<div className='text-red-900 max-w-[530px]'>{signUpErrors.birthDate}</div>}
+                {signUpErrors.birthDate &&<div className='text-xl text-red-900 max-w-[530px]'>{signUpErrors.birthDate}</div>}
               </div>
-              <div className='flex  gap-5'>
+              <div className='  gap-5'>
                 {/* <label>Phone number: </label> */}
-                <input type='text' placeholder='phone number*' name='phoneNumber' value={signUpData.phoneNumber} onChange={handleSignUpDataChange} className="placeholder-yellow-300 text-cyan-400 bg-[url('../../public/bg2.png')] bg-repeat rounded-3xl shadow-2xl py-6 px-11 border-4 border-yellow-300"/>
-                {signUpErrors.phoneNumber &&<div className='text-red-900 max-w-[530px]'>{signUpErrors.phoneNumber}</div>}
+                <input type='text' placeholder='phone number*' name='phoneNumber' value={signUpData.phoneNumber} onChange={handleSignUpDataChange} className="placeholder-yellow-300 text-yellow-300 bg-[url('../../public/bg2.png')] bg-repeat rounded-3xl shadow-2xl py-6 px-11 border-4 border-yellow-300"/>
+                {signUpErrors.phoneNumber &&<div className='text-xl text-red-900 max-w-[530px]'>{signUpErrors.phoneNumber}</div>}
               </div>
               <input className="text-violet-900 bg-[url('../../public/bg2.png')] bg-repeat hover:bg-[url('../../public/bg1.png')] hover:bg-repeat border-8 border-violet-800 rounded-3xl shadow-2xl py-6 px-11 cursor-pointer	" type='submit' value='Sign Up'/>
               <div className="flex bg-[url('../../public/bg2.png')] bg-repeat px-10 py-5 rounded-full shadow-2xl">
