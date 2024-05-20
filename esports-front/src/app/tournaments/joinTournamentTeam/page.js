@@ -30,7 +30,7 @@ const JoinTournament = () => {
         <div><div className='flex gap-5'>
           {teamsCards}
         </div>
-        <button className='rounded-xl p-3 bg-cyan-700' onClick={()=>setShowAddTeam(true)}>Add Team</button>
+        {<button className='rounded-xl p-3 bg-cyan-700' onClick={()=>setShowAddTeam(true)}>Add Team</button>}
         </div>:
         // add tournament form here
         <div className='flex flex-col gap-8'> 

@@ -10,13 +10,12 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.3.3",
-    "@g-loot/react-tournament-brackets": "^1.0.31-rc",
+    "@sportsgram/brackets": "^0.0.1",
     "emailjs-com": "^3.2.0",
     "jsonwebtoken": "^9.0.2",
     "next": "14.2.3",
     "react": "^18",
-    "react-dom": "^18",
-    "react-tournament-bracket": "^0.2.4"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "eslint": "^8",
