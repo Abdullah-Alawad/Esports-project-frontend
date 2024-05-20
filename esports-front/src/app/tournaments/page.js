@@ -72,7 +72,7 @@ const Tournament = () => {
           },
           body:JSON.stringify(newTournamentData),
         }
-        const createTournamentResponse = await fetch("https://selfless-charisma-production.up.railway.app/user/createTournament",options)
+        const createTournamentResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/createTournament",options)
         const createTournamentData = await createTournamentResponse.json();
         alert(createTournamentData.message);
       }catch(err){
@@ -100,7 +100,7 @@ const Tournament = () => {
       })
       }
       try{  
-      const joinResponse = await fetch("https://selfless-charisma-production.up.railway.app/user/joinTournament",options);
+      const joinResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/joinTournament",options);
       const joinData = await joinResponse.json();
       alert(joinData.message)
       }catch(err){
@@ -240,7 +240,7 @@ const Tournament = () => {
   )
 
   async function getTournamentsData(){
-    const tournamentResponse1 = await fetch("https://selfless-charisma-production.up.railway.app/tournament/tournaments");
+    const tournamentResponse1 = await fetch("https://esports-project-backend-production.up.railway.app/tournament/tournaments");
     const tournamentData1 = await tournamentResponse1.json();
     //check tournaments dates
     for(let i = 0; i < tournamentData1.length;i++){
@@ -249,7 +249,7 @@ const Tournament = () => {
       }
     }
 
-    const tournamentResponse2 = await fetch("https://selfless-charisma-production.up.railway.app/tournament/tournaments");
+    const tournamentResponse2 = await fetch("https://esports-project-backend-production.up.railway.app/tournament/tournaments");
     const tournamentData2 = await tournamentResponse2.json();
     setTournamentsData(tournamentData2);
   }
@@ -267,7 +267,7 @@ const Tournament = () => {
     };
     try {
       const updateTournamentResponse = await fetch(
-        `https://selfless-charisma-production.up.railway.app/user/editTournament/`,
+        `https://esports-project-backend-production.up.railway.app/user/editTournament/`,
         options
       );
       if (!updateTournamentResponse.ok) {

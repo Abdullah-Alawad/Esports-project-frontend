@@ -11,7 +11,7 @@ const Tournament = () => {
 
 
   async function getTournamentData(){
-    const tournamentResponse = await fetch(`https://selfless-charisma-production.up.railway.app/tournament/tournament/${window.location.href.split("=")[1]}`)
+    const tournamentResponse = await fetch(`https://esports-project-backend-production.up.railway.app/tournament/tournament/${window.location.href.split("=")[1]}`)
     const tournamentData = await tournamentResponse.json();
     console.log(tournamentData.teams)
     setTournamentData(tournamentData);
@@ -26,7 +26,7 @@ const Tournament = () => {
       }
     }
 
-    const playerRoleResponse = await fetch(`https://selfless-charisma-production.up.railway.app/user/playerRole/${window.location.href.split("=")[1]}`,options)
+    const playerRoleResponse = await fetch(`https://esports-project-backend-production.up.railway.app/user/playerRole/${window.location.href.split("=")[1]}`,options)
     const playerRoleData = await playerRoleResponse.json();
     console.log(playerRoleData);
     if(!playerRoleData.role){
@@ -49,7 +49,7 @@ const Tournament = () => {
         },
         body: JSON.stringify(tournamentData)
       }
-      const cancelTournamentResponse = await fetch("https://selfless-charisma-production.up.railway.app/user/editTournament/",options)
+      const cancelTournamentResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/editTournament/",options)
       alert("canceled successfully");
       //redirect to tournaments page
     }catch(err){

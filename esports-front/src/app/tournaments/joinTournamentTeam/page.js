@@ -74,7 +74,7 @@ const JoinTournament = () => {
           maxPlayers: tournamentData.teamSize
         })
       }
-      const addTeamResponse = await fetch("https://selfless-charisma-production.up.railway.app/user/addTeam",options);
+      const addTeamResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/addTeam",options);
       const addTeamData = await addTeamResponse.json();
       alert("team created successfully");
       setShowAddTeam(false);

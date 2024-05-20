@@ -48,7 +48,7 @@ export default function Home() {
 
 
   async function getTournamentsData(){
-    const tournamentResponse = await fetch("https://selfless-charisma-production.up.railway.app/tournament/tournaments");
+    const tournamentResponse = await fetch("https://esports-project-backend-production.up.railway.app/tournament/tournaments");
     const tournamentData = await tournamentResponse.json();
     setTournamentsData(tournamentData);
   }
