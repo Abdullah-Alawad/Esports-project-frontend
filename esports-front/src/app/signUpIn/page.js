@@ -92,7 +92,7 @@ const SignUpIn = () => {
         body: JSON.stringify(signUpData)
       }
       try{
-      const signUpResponse = await fetch("https://selfless-charisma-production.up.railway.app/user/signup",options)
+      const signUpResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/signup",options)
       const signUpData  = await signUpResponse.json();
       const token = signUpData;
       localStorage.setItem("token",token);
@@ -115,7 +115,7 @@ const SignUpIn = () => {
       body: JSON.stringify(signInData)
     }
     try{
-    const signInResponse = await fetch("https://selfless-charisma-production.up.railway.app/user/login",options)
+    const signInResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/login",options)
     const signInData  = await signInResponse.json();
     const token = signInData;
     console.log(token);

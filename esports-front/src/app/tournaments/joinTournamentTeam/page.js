@@ -30,7 +30,7 @@ const JoinTournament = () => {
         <div><div className='flex gap-5'>
           {teamsCards}
         </div>
-        <button className='rounded-xl p-3 bg-cyan-700' onClick={()=>setShowAddTeam(true)}>Add Team</button>
+        {<button className='rounded-xl p-3 bg-cyan-700' onClick={()=>setShowAddTeam(true)}>Add Team</button>}
         </div>:
         // add tournament form here
         <div className='flex flex-col gap-8'> 
@@ -74,7 +74,7 @@ const JoinTournament = () => {
           maxPlayers: tournamentData.teamSize
         })
       }
-      const addTeamResponse = await fetch("https://selfless-charisma-production.up.railway.app/user/addTeam",options);
+      const addTeamResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/addTeam",options);
       const addTeamData = await addTeamResponse.json();
       alert("team created successfully");
       setShowAddTeam(false);

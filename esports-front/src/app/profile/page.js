@@ -72,7 +72,7 @@ const Profile = () => {
 
   async function getUserData(){
     const token =localStorage.getItem("token");
-    const userDataResponse = await fetch("https://selfless-charisma-production.up.railway.app/user/profile",{
+    const userDataResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/profile",{
     method:"GET",  
     headers:{
         "Content-Type":"application/json",
