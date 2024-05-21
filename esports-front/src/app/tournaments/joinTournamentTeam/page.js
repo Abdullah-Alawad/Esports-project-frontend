@@ -47,7 +47,7 @@ const JoinTournament = () => {
   )
 
   async function getTournamentsData(tournamentId){
-    const tournamentResponse = await fetch(`https://selfless-charisma-production.up.railway.app/tournament/tournament/${tournamentId}`)
+    const tournamentResponse = await fetch(`https://esports-project-backend-production.up.railway.app/tournament/tournament/${tournamentId}`)
     const tournamentData = await tournamentResponse.json();
     console.log(tournamentData.teams);
     setTournamentData(tournamentData);
@@ -97,7 +97,7 @@ const JoinTournament = () => {
           password: "",
         })
       }
-      const joinTeamResponse= await fetch("https://selfless-charisma-production.up.railway.app/user/joinTeam",options);
+      const joinTeamResponse= await fetch("https://esports-project-backend-production.up.railway.app/user/joinTeam",options);
       const joinTeamData = await joinTeamResponse.json();
       alert(joinTeamData.message);
     }catch(err){
