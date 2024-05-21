@@ -3,7 +3,15 @@ import { useEffect, useState, useContext } from "react";
 import { TokenContext } from "../layout";
 import React from 'react'
 import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 import Link from "next/link";
+import Image from "next/image";
+import icon2 from "../../../public/mini4-t.png";
+import icon1 from "../../../public/mini3-t.png";
+import icon3 from "../../../public/tournament.png";
+
+
+
 const Tournament = () => {
   const [tournamentsData, setTournamentsData] = useState([]);
   const [showCreateTournament, setShowCreateTournament] = useState(false);
@@ -15,6 +23,8 @@ const Tournament = () => {
     isTeamMatch:false,
     image:"",
   })
+
+
   const {haveToken} = useContext(TokenContext)
     useEffect(()=>{
       getTournamentsData();
@@ -110,10 +120,10 @@ const Tournament = () => {
 
     const tournamentsCards = tournamentsData && tournamentsData.map(tournament=>{
       if(tournament.status!=="canceled")
-      return <div key ={tournament._id} className="rounded-xl bg-[url('../../public/bg1.png')] bg-repeat p-3 flex flex-col justify-center ">
-        <img src={tournament.image} className="w-36 h-56 rounded-xl m-auto shadow-2xl mb-2" />
-        <h1 className="text-2xl font-bold text-center">{tournament.game}</h1>
-        <h1 className="text-xl font-semibold">Prize: <span className="font-bold">{tournament.prize}</span></h1>
+      return <div key ={tournament._id} className="transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 text-slate-200 rounded-xl bg-[url('../../public/bg1.png')] bg-repeat px-3 flex flex-col justify-center max-w-[300px]">
+        <img src={tournament.image} className="w-52 h-80 rounded-xl m-auto shadow-2xl mb-2 mt-7" />
+        <h1 className="text-2xl font-bold text-center text-yellow-300">{tournament.game}</h1>
+        <h1 className="text-xl font-semibold">Prize: {tournament.prize? <span className="font-bold">{tournament.prize}$</span>: <span>FREE</span>}</h1>
         <h1 className="text-xl font-semibold">Duration: <span className="font-bold">{tournament.duration}</span></h1>
         {/* show more info about tournament */}
         
@@ -121,8 +131,8 @@ const Tournament = () => {
         {
           tournament.status==="ongoing"?
             <>
-            <div>Playing</div>
-            <Link href={{
+            <div className=" font-bold text-xl text-center text-red-800">Tournament started</div>
+            <Link className="w-48 m-auto transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 bg-[url('../../public/bg2.png')] bg-repeat mb-5 mt-3 text-center font-bold text-2xl rounded-full border-4 border-violet-500 hover:border-violet-800" href={{
                       pathname: '/tournaments/tournament',
                       query: { tournamentId: tournament._id },
                     }}>more details</Link>
@@ -133,12 +143,12 @@ const Tournament = () => {
                 tournament.numberOfTeams!==tournament.teams.length?
                   haveToken?
                   // send tournament id
-                    <Link href={{
+                    <Link className="w-48 m-auto transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 bg-[url('../../public/bg2.png')] bg-repeat mb-5 mt-3 text-center font-bold text-2xl rounded-full border-4 border-violet-500 hover:border-violet-800" href={{
                       pathname: '/tournaments/joinTournamentTeam',
                       query: { tournamentId: tournament._id },
                     }}>Join now</Link>
                   :
-                  <Link href={"/signUpIn"}>Join now</Link>
+                  <Link className="w-48 m-auto transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 bg-[url('../../public/bg2.png')] bg-repeat mb-5 mt-3 text-center font-bold text-2xl rounded-full border-4 border-violet-500 hover:border-violet-800" href={"/signUpIn"}>Join now</Link>
                 :
                 <div>tournament is full </div>
               :
@@ -147,9 +157,9 @@ const Tournament = () => {
               // send tournament id
                 <button onClick={()=>{handleJoinTournament(tournament._id)}}>Join now</button>
               :
-              <Link href={"/signUpIn"}>Join now</Link>
+              <Link className="w-48 m-auto transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 bg-[url('../../public/bg2.png')] bg-repeat mb-5 mt-3 text-center font-bold text-2xl rounded-full border-4 border-violet-500 hover:border-violet-800" href={"/signUpIn"}>Join now</Link>
               :
-                <div>tournament is full</div>
+                <div className=" font-bold text-2xl text-center text-red-800">tournament is full</div>
             :
             <></>
         }
@@ -157,10 +167,18 @@ const Tournament = () => {
      }) 
 
   return (
-    <div className="bg-[url('../../public/bg2.png')] bg-repeat pt-10">
+    <div className="font-custom bg-[url('../../public/bg2.png')] bg-repeat pt-10 flex flex-col items-center">
     <NavBar />
+        <div className="flex flex-row justify-center">
+          <Image src={icon1} width={90} height={70} />
+          <div className="font-extrabold text-6xl text-center translate-y-4">Tournaments</div>
+          <Image src={icon2} width={90} height={70} />
+        </div>
         {!showCreateTournament? <><div className="m-10">
-          <button className="rounded-xl p-4 bg-cyan-600" onClick={()=>setShowCreateTournament(true)}>Create Tournament</button>
+          <button className="flex font-bold p-4 transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 text-3xl shadow-2xl rounded-full border-8 border-slate-200 hover:border-violet-800 bg-[url('../../public/bg1.png')] bg-repeat" onClick={()=>setShowCreateTournament(true)}>
+            <Image src={icon3} width={60} height={60} />
+            <div className=" ml-2 translate-y-3">Create Tournament</div>
+          </button>
         </div>
         <div className="flex m-8 p-3 flex-wrap gap-10">
           {tournamentsCards}
@@ -190,7 +208,7 @@ const Tournament = () => {
 
             {newTournamentData.havePrize && <div className="flex gap-5">
               <label>Prize amount</label>
-              <input type="number" min={5} max={500} value={newTournamentData.prize || 5} onChange={handleInputChange}/>
+              <input type="number" min={5} max={500} value={newTournamentData.prize || 5} name="prize" onChange={handleInputChange}/>
             </div>}
 
             <div className="flex gap-5">
@@ -236,6 +254,7 @@ const Tournament = () => {
           <button className="rounded-xl p-4 bg-cyan-600" onClick={()=>setShowCreateTournament(false)}>Back to tournaments</button>
         </div>
         }
+        <Footer />
     </div>
   )
 
