@@ -9,7 +9,7 @@ import icon2 from "../../../public/mini4-t.png"
 import icon3 from "../../../public/mini12-t.png"
 import icon4 from "../../../public/mini10-t.png"
 
-const contact = () => {
+const Contact = () => {
   const form = useRef();
 
   const sendEmail = (e) => {
@@ -71,6 +71,6 @@ const contact = () => {
   )
 }
 
-export default contact;
+export default Contact;
 
 

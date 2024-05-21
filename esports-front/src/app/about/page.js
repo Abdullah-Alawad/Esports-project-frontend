@@ -13,7 +13,7 @@ import mini2 from '../../../public/mini2-t.png';
 import controller from '../../../public/controller-t.png';
 
 
-const about = () => {
+const About = () => {
   return (
     <div className="bg-[url('../../public/bg2.png')] bg-repeat font-custom pt-7">
       <NavBar />
@@ -67,7 +67,7 @@ const about = () => {
           <Image src={controller} alt='controller'  className='rounded-2xl  w-[300px] h-[250px]'/>
         </div>
         <div className=" text-slate-200 font-bold text-2xl mx-96 mb-16 px-5 pt-5 leading-relaxed h-fit pb-4 text-center  bg-[url('../../public/bg1.png')] bg-repeat rounded-xl shadow-2xl">
-          Whether you're a casual gamer looking for some friendly competition or a seasoned pro seeking to test your skills
+          Whether you&lsquo;re a casual gamer looking for some friendly competition or a seasoned pro seeking to test your skills
           against the best, EplayJo welcomes you to join our growing community. Sign up now to start participating in tournaments,
           connecting with fellow gamers, and unlocking a world of gaming possibilities!
         </div>
@@ -77,4 +77,4 @@ const about = () => {
   )
 }
 
-export default about
+export default About
