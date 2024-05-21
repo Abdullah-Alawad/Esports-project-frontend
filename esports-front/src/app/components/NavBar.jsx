@@ -11,7 +11,7 @@ import contact from '../../../public/contact1.png'
 import tournament from '../../../public/tournament.png'
 import Image from 'next/image'
 import { TokenContext } from "../layout";
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 
 const NavBar = () => {
   const {haveToken, setHaveToken} = useContext(TokenContext)
@@ -23,9 +23,41 @@ const NavBar = () => {
   const [hoveredAbout, setHoveredAbout] = useState(false);
   const [hoveredContact, setHoveredContact] = useState(false);
 
+  const [tournaments, setTournaments] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredTournaments, setFilteredTournaments] = useState([]);
+
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    if (query === '') {
+      setFilteredTournaments([]);
+    } else {
+      // Filter tournaments based on search query
+      const filtered = tournaments.filter(tournament =>
+        tournament.game.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredTournaments(filtered);
+    }
+  };
+  useEffect(() => {
+    const fetchTournaments = async () => {
+      try {
+    const tournamentResponse = await fetch("https://esports-project-backend-production.up.railway.app/tournament/tournaments");
+    const tournamentData = await tournamentResponse.json();
+    setTournaments(tournamentData);
+    //setFilteredTournaments(tournamentData);
+    }
+    catch (error) {
+      console.error('Error fetching tournaments:', error);
+    }
+  };
+  fetchTournaments();
+}, []);
 
   return (
-    <div className="flex ">
+    <div className="flex justify-center">
          <div className="bg-[url('../../public/bg1.png')] bg-repeat rounded-full ml-5 px-1 py-1 max-w-[170px] z-10 border-y-8 border-l-8 border-r-8 border-violet-900/25 shadow-2xl" >
           <Link href={"/"}><Image src={logo} width={160} className='transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300'/></Link>
          </div>
@@ -70,13 +102,32 @@ const NavBar = () => {
             </div>
           </div>
 
+          <div>
+            <input
+              type="text"
+              placeholder="Search for game..."
+              className="bg-[url('../../public/bg2.png')] bg-repeat py-3 pl-2 shadow-2xl rounded-2xl text-xl font-bold placeholder-slate-200"
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
+
+            <ul>
+            {filteredTournaments.map(tournament => (
+            <li key={tournament.id}>
+            <h2>{tournament.game}</h2>
+            {/* <p>{tournament.game}</p> */}
+            </li>
+            ))}
+            </ul>
+          </div>
+
           {/* make this conditional rendering based on if user signed in */}
           <div className='flex gap-8 font-extrabold text-3xl mr-10 text-black'>
             {haveToken &&<Link href={"/profile"} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}  className=' hover:text-slate-200'>
-              <div className={`transition-transform duration-1000 ${hovered ? '-translate-x-12' : 'translate-x-24'} ${hoveredSignout ? '-translate-x-14' : ''}`}>
+              <div className={`transition-transform duration-1000 ${hovered ? '-translate-x-12' : 'translate-x-24'} ${hoveredSignout ? '-translate-x-16' : ''}`}>
                 <Image src={profile} alt="Profile" title='Profile' width={50} height={50}/>
               </div>
-              <div className={`transition-opacity duration-1000 ml-2 ${hovered ? 'opacity-100' : 'opacity-0'} -translate-y-11`}>
+              <div className={`transition-opacity duration-1000 ml-2 ${hovered ? 'opacity-100' : 'opacity-0'}  -translate-y-11`}>
                 Profile
               </div>
             </Link>}
