@@ -4,9 +4,11 @@ import Image from 'next/image';
 import poster from "../../../public/poster1.png"
 import logo from "../../../public/controller-t.png"
 import { TokenContext } from "../layout";
+import { useRouter } from 'next/navigation'
 
 const SignUpIn = () => {
-  const [signInData, setSignInData] = useState([]);
+  const router = useRouter();
+  const [signInData, setSignInData] = useState({});
   const [signUpData, setSignUpData] = useState({
     username: '',
     email: '',
@@ -95,12 +97,16 @@ const SignUpIn = () => {
       const signUpResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/signup",options)
       const signUpData  = await signUpResponse.json();
       const token = signUpData;
-      localStorage.setItem("token",token);
-      setHaveToken(true);
-      //redirect to home page
-      }catch(err ){
-        console.log(err);
-      }
+      console.log(signUpData);
+      if(signUpResponse.status===200){
+        localStorage.setItem("token",token);
+        setHaveToken(true);
+        router.push('/')}
+        else
+        alert("f off");
+        }catch(err ){
+          console.log(err);
+        }
     }
   }
 
@@ -110,7 +116,6 @@ const SignUpIn = () => {
       method:"POST",
       headers: {
           "Content-Type": "application/json",
-          "access-control-allow-origin" : "*",
         },
       body: JSON.stringify(signInData)
     }
@@ -118,11 +123,12 @@ const SignUpIn = () => {
     const signInResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/login",options)
     const signInData  = await signInResponse.json();
     const token = signInData;
-    console.log(token);
+      if(signInResponse.status===200){
     localStorage.setItem("token",token);
     setHaveToken(true);
-    //redirect to home page
-    alert("hello");
+    router.push('/')}
+    else
+    alert("f off");
     }catch(err ){
       console.log(err);
     }
@@ -149,9 +155,9 @@ const SignUpIn = () => {
               </div>
             <div className='flex flex-col gap-5'>
               {/* <label>Password: </label> */}{showPassword? 
-                (<input type='text' placeholder='password*' name='password1' value={signUpData.password1} onChange={handleSignUpDataChange} className="placeholder-yellow-300 bg-[url('../../public/bg2.png')] bg-repeat rounded-3xl shadow-2xl py-6 px-11 border-4 border-yellow-300"/>)
+                (<input type='text' placeholder='password*' name='password' value={signInData.password} onChange={handleSignInDataChange} className="placeholder-yellow-300 bg-[url('../../public/bg2.png')] bg-repeat rounded-3xl shadow-2xl py-6 px-11 border-4 border-yellow-300"/>)
                 :
-                (<input type='password' placeholder='password*' name='password1' value={signUpData.password1} onChange={handleSignUpDataChange} className="placeholder-yellow-300 bg-[url('../../public/bg2.png')] bg-repeat rounded-3xl shadow-2xl py-6 px-11 border-4 border-yellow-300"/>)
+                (<input type='password' placeholder='password*' name='password' value={signInData.password} onChange={handleSignInDataChange} className="placeholder-yellow-300 bg-[url('../../public/bg2.png')] bg-repeat rounded-3xl shadow-2xl py-6 px-11 border-4 border-yellow-300"/>)
                 }
                 <div className='translate-x-8 -translate-y-4'>
                   <input type='checkbox' checked={showPassword} onChange={toggleShowPassword} className='w-5 h-5 text-yellow-400 accent-yellow-300 bg-gray-100 border-gray-300 rounded focus:ring-yellow-500 dark:focus:ring-yellow-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'/>
