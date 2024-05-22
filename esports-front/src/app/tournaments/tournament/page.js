@@ -266,6 +266,7 @@ const Tournament = () => {
           })
     }
   }
+}
   return (
     <div className="font-custom bg-[url('../../public/bg2.png')] bg-repeat pt-10 flex flex-col justify-center items-center ">
     <NavBar />
@@ -287,10 +288,5 @@ const Tournament = () => {
     </div>
   )
 
-  
-  
-
-
-  }
 }
 export default Tournament
