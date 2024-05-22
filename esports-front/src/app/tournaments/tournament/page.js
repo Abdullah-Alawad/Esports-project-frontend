@@ -3,6 +3,7 @@ import { redirect } from 'next/dist/server/api-utils';
 import React from 'react'
 import { useState, useEffect } from 'react';
 import NavBar from '@/app/components/NavBar';
+import Footer from '@/app/components/Footer';
 import { Bracket, RoundProps, Seed, SeedItem, SeedTeam, RenderSeedProps  } from '@sportsgram/brackets';
 
 const Tournament = () => {
@@ -268,23 +269,28 @@ const Tournament = () => {
   }
 }
   return (
-    <div className="font-custom bg-[url('../../public/bg2.png')] bg-repeat pt-10 flex flex-col justify-center items-center ">
+    <div className=" font-custom bg-[url('../../public/bg2.png')] bg-repeat pt-10 flex flex-col justify-center items-center ">
     <NavBar />
     {/* create cancel tournament button and it'll chagne the tournament status to canceled */}
 
 
     {/* tournament brackets */}
-    <Bracket rounds={rounds} renderSeedComponent={teamSeed}/>
+    <div className="flex flex-row text-black ml-10 w-[1400px] justify-center bg-[url('../../public/bg1.png')] bg-repeat pt-3 rounded-2xl shadow-2xl ">
+        <Bracket rounds={rounds}  roundTitleComponent={(title , roundIndex) => {
+        return <div style={{ textAlign: 'center', color: 'white', fontWeight: 'bolder', fontSize: '35px' }}>{title}</div>;
+      }} renderSeedComponent={teamSeed}/>
+    </div>
     {playerRole==="admin" && 
     <div className='flex gap-10'>
-      {<button className='bg-green-600 p-3 rounded-xl' onClick={handleNextRound}>Next round</button>}
-      <button className='bg-red-600 p-3 rounded-xl' onClick={handleCancelTournament}>Cancel tournament</button>
+      {<button className=" border-8 border-slate-200 hover:border-violet-700 shadow-2xl mt-4 mb-5 font-bold text-2xl text-yellow-300 transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 bg-[url('../../public/bg1.png')] bg-repeat p-3 rounded-xl" onClick={handleNextRound}>Next round</button>}
+      <button className="border-8 border-slate-200 hover:border-violet-700 shadow-2xl mt-4 mb-5 font-bold text-2xl text-red-800 transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 bg-[url('../../public/bg1.png')] bg-repeat p-3 rounded-xl" onClick={handleCancelTournament}>Cancel tournament</button>
       {tournamentData&&
         tournamentData.isTeamMatch?
         tournamentData.teamMatches&&tournamentData.teamMatches.length===0 &&<button className='bg-blue-600 p-3 rounded-xl' onClick={handleStartTournament}>Start tournament</button>
           :tournamentData.playerMatches&&tournamentData.playerMatches.length===0 &&<button className='bg-blue-600 p-3 rounded-xl' onClick={handleStartTournament}>Start tournament</button>
        }
     </div>}
+    <Footer />
     </div>
   )
 

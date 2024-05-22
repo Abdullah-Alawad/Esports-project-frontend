@@ -2,6 +2,7 @@
 import React from 'react'
 import { useEffect, useState } from "react";
 import NavBar from "../../components/NavBar";
+import Footer from '@/app/components/Footer';
 
 const JoinTournament = () => {
     const [tournamentData, setTournamentData]= useState({});
@@ -23,7 +24,7 @@ const JoinTournament = () => {
 
 
   return (
-    <div className="bg-[url('../../public/bg2.png')] bg-repeat pt-10">
+    <div className="bg-[url('../../public/bg2.png')] bg-repeat pt-10 font-custom">
         <NavBar />
         {!showAddTeam?
         //tournaments forms
@@ -43,6 +44,7 @@ const JoinTournament = () => {
           </form>
         </div>
         }
+        <Footer />
     </div>
   )
 
