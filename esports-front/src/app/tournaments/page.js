@@ -184,10 +184,13 @@ const Tournament = () => {
           {tournamentsCards}
         </div></>:
         <div>
-          <form className="flex flex-col gap-7" onSubmit={handleCreateTournamentSubmit}>
+          <form className="flex flex-col font-bold text-2xl mb-6 text-slate-200 gap-7 bg-[url('../../public/bg1.png')] bg-repeat p-5 shadow-2xl rounded-2xl mt-5" onSubmit={handleCreateTournamentSubmit}>
+            <div className="text-center text-3xl text-yellow-300">
+              <div>Create Tournament</div>
+            </div>
             <div className="flex gap-5">
-              <label>Game</label>
-              <select name="game" value={newTournamentData.game} onChange={handleInputChange}> 
+              <label >Game</label>
+              <select name="game" className="bg-[url('../../public/bg2.png')] bg-repeat p-1 rounded-xl shadow-2xl text-black" value={newTournamentData.game} onChange={handleInputChange}> 
                 <option value={"League Of Legends"}>League Of Legends</option>
                 <option value={"Dota 2"}>Dota 2</option>
                 <option value={"Street Fighters"}>Street Fighters</option>
@@ -197,18 +200,18 @@ const Tournament = () => {
             
             <div className="flex gap-5">
               <label>StartDate</label>
-              <input name="StartDate" type="datetime-local" value={newTournamentData.StartDate} onChange={handleInputChange}/>
+              <input name="StartDate" className="bg-[url('../../public/bg2.png')] bg-repeat p-1 rounded-xl shadow-2xl text-black" type="datetime-local" value={newTournamentData.StartDate} onChange={handleInputChange}/>
             </div>
 
             <div className="flex gap-5">
               <label>Prize ?</label>
-              <input type="radio" checked={newTournamentData.havePrize} value={true} name="havePrize" onChange={handleInputChange} /> <label>Yes</label>
+              <input type="radio" checked={newTournamentData.havePrize} value={true} name="havePrize" onChange={handleInputChange} className=""/> <label>Yes</label>
               <input type="radio" checked={!newTournamentData.havePrize} value={false} name="havePrize" onChange={handleInputChange}/> <label>No</label>
             </div>
 
             {newTournamentData.havePrize && <div className="flex gap-5">
               <label>Prize amount</label>
-              <input type="number" min={5} max={500} value={newTournamentData.prize || 5} name="prize" onChange={handleInputChange}/>
+              <input type="number" className="bg-[url('../../public/bg2.png')] bg-repeat p-1 rounded-xl shadow-2xl text-black" min={5} max={500} value={newTournamentData.prize || 5} name="prize" onChange={handleInputChange}/>
             </div>}
 
             <div className="flex gap-5">
@@ -221,37 +224,37 @@ const Tournament = () => {
             {newTournamentData.isTeamMatch &&
               <div className="flex gap-5">
                 <label>Team Size</label>
-                <input type="number" min={3} value={newTournamentData.teamSize || 3} name="teamSize" onChange={handleInputChange}/>
+                <input type="number" className="bg-[url('../../public/bg2.png')] bg-repeat p-1 rounded-xl shadow-2xl text-black" min={3} value={newTournamentData.teamSize || 3} name="teamSize" onChange={handleInputChange}/>
               </div>
             }
 
             {newTournamentData.isTeamMatch &&
               <div className="flex gap-5">
                 <label>Number of teams: (must be a power of 2 number)</label>
-                <input type="number" min={2} value={newTournamentData.numberOfTeams || 2}name="numberOfTeams" onChange={handleInputChange}/>
+                <input type="number" className="bg-[url('../../public/bg2.png')] bg-repeat p-1 rounded-xl shadow-2xl text-black" min={2} value={newTournamentData.numberOfTeams || 2}name="numberOfTeams" onChange={handleInputChange}/>
               </div>
             }
 
             {!newTournamentData.isTeamMatch &&
               <div className="flex gap-5">
                 <label>Number of Players: (must be a power of 2 number)</label>
-                <input type="number" min={2} value={newTournamentData.numberOfPlayers || 2}name="numberOfPlayers" onChange={handleInputChange}/>
+                <input type="number" className="bg-[url('../../public/bg2.png')] bg-repeat p-1 rounded-xl shadow-2xl text-black" min={2} value={newTournamentData.numberOfPlayers || 2}name="numberOfPlayers" onChange={handleInputChange}/>
               </div>
             }
 
             <div className="flex gap-5">
               <label>Duration</label>
-              <input type="text" name="duration" value={newTournamentData.duration} onChange={handleInputChange}/>
+              <input type="text" className="bg-[url('../../public/bg2.png')] bg-repeat p-1 rounded-xl shadow-2xl text-black" name="duration" value={newTournamentData.duration} onChange={handleInputChange}/>
             </div>
 
             <div className="flex gap-5">
               <label>Image</label>
-              <input type="text" name="image" value={newTournamentData.image} onChange={handleInputChange}/>
+              <input type="text" className="bg-[url('../../public/bg2.png')] bg-repeat p-1 rounded-xl shadow-2xl text-black" name="image" value={newTournamentData.image} onChange={handleInputChange}/>
             </div>
 
-            <input type="submit" className="bg-cyan-600 p-5 rounded-xl cursor-pointer" />
+            <input type="submit" className="m-auto bg-[url('../../public/bg2.png')] bg-repeat p-1 rounded-xl shadow-2xl text-black cursor-pointer w-44 border-8 border-slate-200 hover:border-violet-800 transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300" />
           </form>
-          <button className="rounded-xl p-4 bg-cyan-600" onClick={()=>setShowCreateTournament(false)}>Back to tournaments</button>
+          <button className=" mb-4 font-extrabold text-2xl text-yellow-300 bg-[url('../../public/bg1.png')] bg-repeat p-1 rounded-xl shadow-2xl cursor-pointer w-80 border-8 border-slate-200 hover:border-violet-800 transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300" onClick={()=>setShowCreateTournament(false)}>Back to tournaments</button>
         </div>
         }
         <Footer />

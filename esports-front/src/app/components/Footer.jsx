@@ -20,11 +20,11 @@ function Footer(){
               </div>
               <div className="mr-5">
                   <div className="text-2xl mt-5 text-yellow-300"><b>About Us</b></div>
-                  <Link href={`/about`}><p className="text-l hover:underline hover:underline-offset-4">Actors Page</p></Link>
+                  <Link href={`/about`}><p className="text-l hover:underline hover:underline-offset-4">About us Page</p></Link>
               </div>
               <div>
                   <div className="text-2xl mt-5 text-yellow-300"><b>Contact Us</b></div>
-                  <Link href={`/contact`}><p className="text-l hover:underline hover:underline-offset-4">Actors Page</p></Link>
+                  <Link href={`/contact`}><p className="text-l hover:underline hover:underline-offset-4">Contact Page</p></Link>
               </div>
             </div>
             <div className="text-3xl font-bold text-center translate-y-10">
