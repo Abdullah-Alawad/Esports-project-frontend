@@ -34,7 +34,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="bg-[url('../../public/bg2.png')] bg-repeat font-custom pt-7 ">
+    <div className="selection:bg-violet-700/70 bg-[url('../../public/bg2.png')] bg-repeat font-custom pt-7 ">
       <NavBar />
       <div className='flex flex-row justify-center mb-10 m-auto text-center'>
         <Image src={icon1} alt="icon" width={70} height={50}/>

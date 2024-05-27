@@ -32,7 +32,7 @@ export default function Home() {
    }) 
 
   return (
-   <div className="font-custom bg-[url('../../public/bg2.png')] bg-repeat pt-10 flex flex-col justify-center items-center ">
+   <div className="selection:bg-violet-700/70 font-custom bg-[url('../../public/bg2.png')] bg-repeat pt-10 flex flex-col justify-center items-center ">
     <NavBar />
       <div className="flex flex-row bg-[url('../../public/bg1.png')] bg-repeat font-extrabold text-center mb-5 px-8 py-5 rounded-xl text-slate-200 shadow-2xl border-8 border-violet-600/50">
         <Image src={icon1} alt="icon" width={100} height={70} />
@@ -72,6 +72,7 @@ export default function Home() {
   async function getTournamentsData(){
     const tournamentResponse = await fetch("https://esports-project-backend-production.up.railway.app/tournament/tournaments");
     const tournamentData = await tournamentResponse.json();
-    setTournamentsData(tournamentData);
+    const limitedTournamentData = tournamentData.slice(-6);
+    setTournamentsData(limitedTournamentData);
   }
 }

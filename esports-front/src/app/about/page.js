@@ -15,7 +15,7 @@ import controller from '../../../public/controller-t.png';
 
 const About = () => {
   return (
-    <div className="bg-[url('../../public/bg2.png')] bg-repeat font-custom pt-7">
+    <div className="bg-[url('../../public/bg2.png')] bg-repeat font-custom pt-7 selection:bg-violet-700/70">
       <NavBar />
       <div className='flex flex-col justify-center items-center'>
         <div className='font-extrabold text-6xl ml-5 mt-3 '>About EplayJO</div>

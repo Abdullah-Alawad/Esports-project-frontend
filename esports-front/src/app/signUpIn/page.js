@@ -135,7 +135,7 @@ const SignUpIn = () => {
   }
   
   return (
-    <div className="font-custom bg-[url('../../public/bg1.png')] bg-repeat pt-5 pb-24 pr-10">
+    <div className="selection:bg-violet-700/70 font-custom bg-[url('../../public/bg1.png')] bg-repeat pt-5 pb-24 pr-10">
       <div className='flex flex-row '>
         <div>
           <Image src={poster} className='w-[750px] rounded-lg shadow-2xl ml-11 mr-28 mt-10' />
