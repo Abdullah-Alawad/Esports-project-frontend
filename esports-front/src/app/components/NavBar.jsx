@@ -114,11 +114,11 @@ const NavBar = () => {
             <ul className='z-50'>
             {filteredTournaments.map(tournament => (
             <Link href={"/tournaments"} >
-            <li className="flex z-50 my-3 border-4 border-violet-400 shadow-2xl hover:bg-[url('../../public/bg1.png')] hover:bg-repeat m-2 rounded-2xl" key={tournament.id}>
+            <li className="flex z-50 my-3 border-4 bg-yellow-300/70 border-violet-400 shadow-2xl hover:bg-[url('../../public/bg1.png')] hover:bg-repeat m-2 rounded-2xl" key={tournament.id}>
               <img className='rounded-2xl mr-2' src={tournament.image} width={60} height={120} alt='img' />
               <div>
-                <h2 className='text-slate-200 font-bold text-xl'>{tournament.game}</h2>
-                <div className='text-slate-200 font-bold text-lg'>{tournament.StartDate.substring(0,10)}</div>
+                <h2 className='text-black font-bold text-xl'>{tournament.game}</h2>
+                <div className='text-black font-bold text-lg'>{tournament.StartDate.substring(0,10)}</div>
               </div>
             </li>
             </Link>
