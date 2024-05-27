@@ -84,6 +84,9 @@ const Tournament = () => {
         }
         const createTournamentResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/createTournament",options)
         const createTournamentData = await createTournamentResponse.json();
+        console.log(createTournamentData.createdTournament);
+        setTournamentsData([...tournamentsData, createTournamentData.createdTournament]);
+        setShowCreateTournament(false);
         alert(createTournamentData.message);
       }catch(err){
         alert(err.message);
