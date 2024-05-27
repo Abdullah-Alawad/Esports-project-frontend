@@ -24,7 +24,7 @@ const JoinTournament = () => {
 
 
   return (
-    <div className="bg-[url('../../public/bg2.png')] bg-repeat pt-10 font-custom">
+    <div className="selection:bg-violet-700/70 bg-[url('../../public/bg2.png')] bg-repeat pt-10 font-custom">
         <NavBar />
         {!showAddTeam?
         //tournaments forms

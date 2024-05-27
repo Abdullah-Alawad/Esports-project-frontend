@@ -155,7 +155,7 @@ const Tournament = () => {
               tournament.numberOfPlayers!==tournament.players.length?
               haveToken?
               // send tournament id
-                <button onClick={()=>{handleJoinTournament(tournament._id)}}>Join now</button>
+                <button className="w-48 m-auto transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 bg-[url('../../public/bg2.png')] bg-repeat mb-5 mt-3 text-center font-bold text-2xl rounded-full border-4 border-violet-500 hover:border-violet-800" onClick={()=>{handleJoinTournament(tournament._id)}}>Join now</button>
               :
               <Link className="w-48 m-auto transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 bg-[url('../../public/bg2.png')] bg-repeat mb-5 mt-3 text-center font-bold text-2xl rounded-full border-4 border-violet-500 hover:border-violet-800" href={"/signUpIn"}>Join now</Link>
               :
@@ -167,7 +167,7 @@ const Tournament = () => {
      }) 
 
   return (
-    <div className="font-custom bg-[url('../../public/bg2.png')] bg-repeat pt-10 flex flex-col items-center">
+    <div className="selection:bg-violet-700/70 font-custom bg-[url('../../public/bg2.png')] bg-repeat pt-10 flex flex-col items-center">
     <NavBar />
         <div className="flex flex-row justify-center">
           <Image src={icon1} width={90} height={70} />
@@ -180,7 +180,7 @@ const Tournament = () => {
             <div className=" ml-2 translate-y-3">Create Tournament</div>
           </button>
         </div>
-        <div className="flex m-8 p-3 flex-wrap gap-10">
+        <div className="flex m-8 p-3 flex-wrap justify-center gap-10">
           {tournamentsCards}
         </div></>:
         <div>

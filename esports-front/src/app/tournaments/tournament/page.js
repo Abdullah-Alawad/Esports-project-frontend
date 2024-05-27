@@ -269,7 +269,7 @@ const Tournament = () => {
   }
 }
   return (
-    <div className=" font-custom bg-[url('../../public/bg2.png')] bg-repeat pt-10 flex flex-col justify-center items-center ">
+    <div className="selection:bg-violet-700/70 font-custom bg-[url('../../public/bg2.png')] bg-repeat pt-10 flex flex-col justify-center items-center ">
     <NavBar />
     {/* create cancel tournament button and it'll chagne the tournament status to canceled */}
 

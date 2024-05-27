@@ -5,7 +5,7 @@ import KASIT from "../../../public/KASIT.jpg"
 
 function Footer(){
     return(
-      <div className="bg-[url('../../public/bg1.png')] bg-repeat w-full text-white border-t-8 border-yellow-300/70">
+      <div className="selection:bg-violet-700/70 bg-[url('../../public/bg1.png')] bg-repeat w-full text-white border-t-8 border-yellow-300/70">
         <div className="flex flex-row justify-around ">
           <Image src={logo} alt='Logo' className='  p-2 h-[300px] w-[300px] translate-y-7' />
           <div className="m-10">

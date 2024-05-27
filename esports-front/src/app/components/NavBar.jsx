@@ -57,8 +57,8 @@ const NavBar = () => {
 }, []);
 
   return (
-    <div className="flex justify-center">
-         <div className="bg-[url('../../public/bg1.png')] bg-repeat rounded-full ml-5 px-1 py-1 max-w-[170px] z-10 border-y-8 border-l-8 border-r-8 border-violet-900/25 shadow-2xl" >
+    <div className="flex justify-center z-50">
+         <div className=" selection:bg-violet-700/70 bg-[url('../../public/bg1.png')] bg-repeat rounded-full ml-5 px-1 py-1 max-w-[170px] z-10 border-y-8 border-l-8 border-r-8 border-violet-900/25 shadow-2xl" >
           <Link href={"/"}><Image src={logo} width={160} className='transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300'/></Link>
          </div>
          
@@ -111,12 +111,17 @@ const NavBar = () => {
               onChange={handleSearchChange}
             />
 
-            <ul>
+            <ul className='z-50'>
             {filteredTournaments.map(tournament => (
-            <li key={tournament.id}>
-            <h2>{tournament.game}</h2>
-            {/* <p>{tournament.game}</p> */}
+            <Link href={"/tournaments"} >
+            <li className="flex z-50 my-3 border-4 border-violet-400 shadow-2xl hover:bg-[url('../../public/bg1.png')] hover:bg-repeat m-2 rounded-2xl" key={tournament.id}>
+              <img className='rounded-2xl mr-2' src={tournament.image} width={60} height={120} alt='img' />
+              <div>
+                <h2 className='text-slate-200 font-bold text-xl'>{tournament.game}</h2>
+                <div className='text-slate-200 font-bold text-lg'>{tournament.StartDate.substring(0,10)}</div>
+              </div>
             </li>
+            </Link>
             ))}
             </ul>
           </div>

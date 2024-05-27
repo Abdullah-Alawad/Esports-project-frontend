@@ -27,7 +27,7 @@ const Profile = () => {
 
 
     return (
-      <div className="font-custom bg-[url('../../public/bg2.png')] bg-repeat pt-10">
+      <div className=" selection:bg-violet-700/70 font-custom bg-[url('../../public/bg2.png')] bg-repeat pt-10">
         <NavBar />
         <div className='flex justify-between'>
           <div className='flex flex-col justify-between'>
