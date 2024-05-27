@@ -48,15 +48,15 @@ const JoinTournament = () => {
         {!showAddTeam?
         //tournaments forms
         <div className='flex flex-col items-center justify-center mb-28'>
-          <div className='flex gap-5'>
+          <div className='flex gap-5 flex-wrap ml-6'>
           {teamsCards}
           </div>
           {(tournamentData.teams && (tournamentData.teams.length !== tournamentData.numberOfTeams))&&<button  className="rounded-2xl text-xl border-8 border-violet-400 hover:border-violet-800 text-slate-200 transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 font-bold p-3 bg-[url('../../public/bg1.png')] bg-repeat" onClick={()=>setShowAddTeam(true)}>Add Team</button>}
         </div>:
         // add tournament form here
         <div className='flex flex-col gap-8'> 
-          <div className="text-slate-200 font-bold text-3xl mx-96 mt-10 mb-5 px-5 pt-5 leading-relaxed h-fit pb-4 text-center  bg-[url('../../public/bg1.png')] bg-repeat rounded-xl shadow-2xl">
-            Add the team to create a new team
+          <div className="text-slate-200 font-bold text-3xl mx-[600px] mt-10 mb-5 px-5 pt-5 leading-relaxed h-fit pb-4 text-center  bg-[url('../../public/bg1.png')] bg-repeat rounded-xl shadow-2xl">
+            Add the team name to create a new team
           </div>
           <form className='flex flex-col justify-start items-center' onSubmit={handleAddTeamForm}>
             <div className='flex gap-5 mb-8'>

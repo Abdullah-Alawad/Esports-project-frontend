@@ -1,6 +1,7 @@
 "use client"
 import { redirect } from 'next/dist/server/api-utils';
 import React from 'react'
+import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-custom-alert';
 import 'react-custom-alert/dist/index.css';
@@ -9,6 +10,8 @@ import Footer from '@/app/components/Footer';
 import { Bracket, RoundProps, Seed, SeedItem, SeedTeam, RenderSeedProps  } from '@sportsgram/brackets';
 
 const Tournament = () => {
+
+  const router = useRouter();
 
   const alertWarning = (message) => toast.warning(message);
   const alertSuccess = (message) => toast.warning(message);
@@ -69,7 +72,7 @@ const Tournament = () => {
     const playerRoleResponse = await fetch(`https://esports-project-backend-production.up.railway.app/user/playerRole/${window.location.href.split("=")[1]}`,options)
     const playerRoleData = await playerRoleResponse.json();
     if(!playerRoleData.role){
-      //redirect
+      router.push("/tournaments")
       alertWarning("You are not registered in this tournment");
     }
     setPlayerRole(playerRoleData.role);
@@ -88,8 +91,8 @@ const Tournament = () => {
         body: JSON.stringify(tournamentData)
       }
       const cancelTournamentResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/editTournament/",options)
+      router.push("/tournaments")
       alertSuccess("canceled successfully");
-      //redirect to tournaments page
     }catch(err){
       console.log(err);
     }
@@ -117,8 +120,8 @@ const Tournament = () => {
         body: JSON.stringify(tournamentData)
       }
       const createMatchRespnose = await fetch("https://esports-project-backend-production.up.railway.app/user/editTournament/",options)
+      router.push("/touurnaments")
       alertSuccess("match created successfully");
-      //redirect to tournaments page
     }catch(err){
       console.log(err);
     }
@@ -360,7 +363,7 @@ const Tournament = () => {
     <div className="flex flex-row text-black ml-10 w-[1400px] justify-center bg-[url('../../public/bg1.png')] bg-repeat pt-3 rounded-2xl shadow-2xl ">
         <Bracket rounds={rounds}  roundTitleComponent={(title , roundIndex) => {
         return <div style={{ textAlign: 'center', color: 'white', fontWeight: 'bolder', fontSize: '35px' }}>{title}</div>;
-      }} renderSeedComponent={teamSeed}/>
+      }} renderSeedComponent={customSeed}/>
     </div>
     {playerRole==="admin" && 
     <div className='flex gap-10'>
