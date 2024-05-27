@@ -2,11 +2,17 @@
 import { redirect } from 'next/dist/server/api-utils';
 import React from 'react'
 import { useState, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-custom-alert';
+import 'react-custom-alert/dist/index.css';
 import NavBar from '@/app/components/NavBar';
 import Footer from '@/app/components/Footer';
 import { Bracket, RoundProps, Seed, SeedItem, SeedTeam, RenderSeedProps  } from '@sportsgram/brackets';
 
 const Tournament = () => {
+
+  const alertWarning = (message) => toast.warning(message);
+  const alertSuccess = (message) => toast.warning(message);
+
   const [tournamentData,setTournamentData] = useState({});
   const [playerRole, setPlayerRole]= useState("");
 
@@ -65,8 +71,8 @@ const Tournament = () => {
     console.log(playerRoleData);
     if(!playerRoleData.role){
       //redirect
-      alert("you shouldn't be here");
-      setPlayerRole("hello");
+      alertWarning("You are not registered in this tournment");
+      
     }
     setPlayerRole(playerRoleData.role);
   }
@@ -84,7 +90,7 @@ const Tournament = () => {
         body: JSON.stringify(tournamentData)
       }
       const cancelTournamentResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/editTournament/",options)
-      alert("canceled successfully");
+      alertSuccess("canceled successfully");
       //redirect to tournaments page
     }catch(err){
       console.log(err);
@@ -113,7 +119,7 @@ const Tournament = () => {
         body: JSON.stringify(tournamentData)
       }
       const createMatchRespnose = await fetch("https://esports-project-backend-production.up.railway.app/user/editTournament/",options)
-      alert("match created successfully successfully");
+      alertSuccess("match created successfully");
       //redirect to tournaments page
     }catch(err){
       console.log(err);
@@ -131,7 +137,7 @@ const Tournament = () => {
     }
     const teamLostResponse = await fetch(`https://esports-project-backend-production.up.railway.app/user/editTeam/${teamId}`,options);
     const teamLostData = await teamLostResponse.json();
-    alert(teamLostData.message)
+    alertSuccess(teamLostData.message)
   }
 
  function handleNextRound() {
@@ -181,7 +187,7 @@ const Tournament = () => {
       if (!nextRoundResponse.ok) {
         throw new Error('Failed to move to the next round');
       }
-      alert("Moving to the next round");
+      alertSuccess("Moving to the next round");
       // Refresh page or perform any other actions as needed
     })
     .catch(error => {
