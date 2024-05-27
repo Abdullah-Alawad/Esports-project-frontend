@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
 import Image from 'next/image'
+import { ToastContainer, toast } from 'react-custom-alert';
+import 'react-custom-alert/dist/index.css';
 import icon1 from '../../../public/mini6-t.png'
 import icon2 from '../../../public/mini7-t.png'
 import icon3 from '../../../public/mini15.png'
@@ -11,6 +13,10 @@ import icon5 from '../../../public/mini3-t.png'
 import icon6 from '../../../public/mini4-t.png'
 import icon7 from '../../../public/mini19.png'
 const Profile = () => {
+
+    const alertSuccess = (message) => toast.success(message);
+    const alertError = (message) => toast.error(message);
+
     const [userData, setUserData] = useState({});
     const [showUpdateProfile, setShowUpdateProfile] = useState(false);
     const [errors,setErrors] = useState({});
@@ -41,7 +47,7 @@ const Profile = () => {
       <div className=" selection:bg-violet-700/70 font-custom bg-[url('../../public/bg2.png')] bg-repeat pt-10">
         <NavBar />
         {!showUpdateProfile?
-        <>
+        <div className='flex flex-col'>
         <div className='flex justify-between'>
           <div className='flex flex-col justify-between'>
             <div>
@@ -79,24 +85,33 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <button onClick={()=>setShowUpdateProfile(true)}>Edit profile</button>
-        </>:
-        <div>
+        <button className=" w-[300px] ml-16 cursor-pointer mb-10 rounded-2xl text-2xl border-8 border-violet-400 hover:border-violet-800 text-slate-200 transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 font-bold p-3 bg-[url('../../public/bg1.png')] bg-repeat" onClick={()=>setShowUpdateProfile(true)}>Edit profile</button>
+        </div>:
+        <div className='flex flex-col items-center'>
+          <div className='font-extrabold text-6xl mb-5 flex flex-row'>
+              <Image src={icon5} alt='icon' width={70} height={50} />
+              <div>Edit Profile</div>
+              <Image src={icon6} alt='icon' width={70} height={50} />
+          </div>
           <form onSubmit={handleUpdateProfileSubmit}>
-              <div className="flex gap-5">
-                <label>Name</label>
-                <input type="text" className="bg-[url('../../public/bg2.png')] bg-repeat p-1 rounded-xl shadow-2xl text-black" value={userData.userName} name="userName" onChange={handleInputChange}/>
-                {userData.userName &&<div className='text-xl text-red-900 max-w-[530px]'>{errors.userName}</div>}
+              <div className="flex gap-5 mb-5">
+                <label className='text-3xl font-bold mr-2 translate-y-2'>Name</label>
+                <div className='flex flex-col gap-4'>  
+                  <input type="text" className="text-slate-200 font-bold text-2xl pl-3 min-w-[480px] bg-[url('../../public/bg1.png')] bg-repeat min-h-14  rounded-xl border-4 border-violet-900/35" value={userData.username} name="username" onChange={handleInputChange}/>
+                  {userData.username &&<div className='text-xl font-bold text-red-900 max-w-[530px]'>{errors.username}</div>}
+                </div>
               </div>
 
-              <div className="flex gap-5">
-                <label>Phone number</label>
-                <input type="text" className="bg-[url('../../public/bg2.png')] bg-repeat p-1 rounded-xl shadow-2xl text-black" value={userData.phoneNumber} name="phoneNumber" onChange={handleInputChange}/>
-                {userData.phoneNumber &&<div className='text-xl text-red-900 max-w-[530px]'>{errors.phoneNumber}</div>}
+              <div className="flex gap-5 mb-5">
+                <label className='text-3xl font-bold mr-2 translate-y-2' >Phone number</label>
+                <div className='flex flex-col gap-4'>
+                  <input type="text" className="text-slate-200 font-bold text-2xl pl-3 bg-[url('../../public/bg1.png')] bg-repeat min-h-14  rounded-xl border-4 border-violet-900/35" value={userData.phoneNumber} name="phoneNumber" onChange={handleInputChange}/>
+                  {userData.phoneNumber &&<div className='text-xl font-bold text-red-900 max-w-[530px]'>{errors.phoneNumber}</div>}
+                </div>
               </div>
-              <input type='submit' className='cursor-pointer'/>
+              <input className="translate-x-28 w-[200px] ml-16 cursor-pointer mb-10 rounded-2xl text-2xl border-8 border-violet-400 hover:border-violet-800 text-slate-200 transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 font-bold p-3 bg-[url('../../public/bg1.png')] bg-repeat" type='submit'/>
           </form>
-          <button onClick={()=>setShowUpdateProfile(false)}>Back to profile</button>
+          <button className="-translate-x-96 w-[300px] ml-16 cursor-pointer mb-10 rounded-2xl text-2xl border-8 border-violet-400 hover:border-violet-800 text-slate-200 transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 font-bold p-3 bg-[url('../../public/bg1.png')] bg-repeat" onClick={()=>setShowUpdateProfile(false)}>Back to profile</button>
         </div>
         }
         <Footer />
@@ -123,10 +138,10 @@ const Profile = () => {
   async function handleUpdateProfileSubmit(e){
     e.preventDefault();
     const errors ={};
-    if(userData.userName.length < 6 || userData.userName.length > 25){
-      errors.userName = 'Username must be between 6 and 25 characters*';
+    if(userData.username.length < 6 || userData.username.length > 25){
+      errors.username = 'Username must be between 6 and 25 characters*';
     }else{
-      delete errors.userName;
+      delete errors.username;
     }
 
     if (!/^07[789]\d{7}$/.test(userData.phoneNumber)) {
@@ -156,16 +171,16 @@ const Profile = () => {
         if(editUserDataResponse.status===200)
           {
             setUserData(updatedUserData);
-            alert("info updated successufully");
+            alertSuccess("info updated successufully");
             setShowUpdateProfile(false);
           }else{
-            alert("please check that the data you entered is correct");
+            alertError("please check that the data you entered is correct");
           }
       }catch(err){
-        alert(err.message);
+        alertError(err.message);
       }
     }else{
-      alert("please check that the data you entered is correct");
+      alertError("please check that the data you entered is correct");
     }
   }
 
