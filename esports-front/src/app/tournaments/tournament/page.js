@@ -68,11 +68,9 @@ const Tournament = () => {
 
     const playerRoleResponse = await fetch(`https://esports-project-backend-production.up.railway.app/user/playerRole/${window.location.href.split("=")[1]}`,options)
     const playerRoleData = await playerRoleResponse.json();
-    console.log(playerRoleData);
     if(!playerRoleData.role){
       //redirect
       alertWarning("You are not registered in this tournment");
-      
     }
     setPlayerRole(playerRoleData.role);
   }
@@ -104,8 +102,8 @@ const Tournament = () => {
       }
   }
     else{
-      for(let i=0;i< tournamentData.teams.length; i+=2){
-        tournamentData.teamMatches.push({player1:tournamentData.players[i], player2: tournamentData.players[i+1]})
+      for(let i=0;i< tournamentData.players.length; i+=2){
+        tournamentData.playerMatches.push({player1:tournamentData.players[i], player2: tournamentData.players[i+1]})
       }
     }
     try{
@@ -139,6 +137,32 @@ const Tournament = () => {
     const teamLostData = await teamLostResponse.json();
     alertSuccess(teamLostData.message)
   }
+
+  async function makePlayerLose(playerId){
+    const token = localStorage.getItem("token");
+    const tempTournamentData = tournamentData;
+    try{
+      tempTournamentData.players.map(player=>{
+        if(player._id === playerId)
+            player.status="lost";
+      })
+
+      const options = {
+        method:"PUT",
+        headers:{
+          "Content-Type":"application/json",
+          authorization:token,
+          body:JSON.stringify(tempTournamentData)
+        },
+      }
+      
+      const playerLostResponse = await fetch(`https://esports-project-backend-production.up.railway.app/user/editTeam`,options);
+      const playerLostData = await playerLostResponse.json();
+      alert("Player lost")
+    }catch(err){
+      alert(err.message);
+    }
+}
 
  function handleNextRound() {
   getTournamentData()
@@ -201,7 +225,9 @@ const Tournament = () => {
   },[])
 
   //players / teams
-  const teamSeed = ({seed, breakpoint, roundIndex, seedIndex}) => {
+  let customSeed;
+  if(tournamentData.isTeamMatch){
+    customSeed = ({seed, breakpoint, roundIndex, seedIndex}) => {
     return (
       <Seed mobileBreakpoint={breakpoint} >
         <SeedItem>
@@ -213,9 +239,21 @@ const Tournament = () => {
       </Seed>
     );
   }
-
-
-  const rounds=[];
+}else{
+   customSeed = ({seed, breakpoint, roundIndex, seedIndex}) => {
+    return (
+      <Seed mobileBreakpoint={breakpoint} >
+        <SeedItem>
+          <div>
+            <span className={`${playerRole==="admin"?'hover:text-red-500 ':'cursor-default'}${seed.players[0].status==="lost"?'text-red-500 line-through':'cursor-default'}`} onClick={()=>playerRole==="admin" && makePlayerLose(seed.players[0].id)}><SeedTeam>{seed.players[0]?.name || 'NO Player '}</SeedTeam></span>
+            <span className={`${playerRole==="admin"?'hover:text-red-500 ':'cursor-default'}${seed.players[1].status==="lost"?'text-red-500 line-through':'cursor-default'}`} onClick={()=>playerRole==="admin" && makePlayerLose(seed.players[1].id)}><SeedTeam>{seed.players[1]?.name || 'NO Player '}</SeedTeam></span>
+          </div>
+        </SeedItem>
+      </Seed>
+    );
+  }
+}
+  
   // if(Object.keys(tournamentData).length!==0)
   // for(let i = Math.log2(tournamentData && tournamentData.teams.length), currRound=1, currTeam=0; i>=1;i--,currRound++){
   //   rounds.push({title: `round ${currRound}`,seeds:[]});
@@ -237,49 +275,87 @@ const Tournament = () => {
   //       }
   //     }
   // }
-
+  const rounds=[];
   if(Object.keys(tournamentData).length!==0 )
-    if(tournamentData.teamMatches.length!=0){
+    if(tournamentData.isTeamMatch){
+      if(tournamentData.teamMatches.length!=0){
 
-      let remainingTeamsCount=0;
-      for(let i= 0;i <tournamentData.teams.length;i++)
-        if(tournamentData.teams[i].status==="remaining")
-          remainingTeamsCount++;
+        let remainingTeamsCount=0;
+        for(let i= 0;i <tournamentData.teams.length;i++)
+          if(tournamentData.teams[i].status==="remaining")
+            remainingTeamsCount++;
 
-    for(let i= Math.log2(tournamentData && tournamentData.teams.length), currRound=1,currMatch=0 ; i>=1 ; i--,currRound++){
-      rounds.push({title: `round ${currRound}`,seeds:[]});
-      for (let j=0; j< Math.pow(2,i)/2; j++, currMatch++)
-        if(i>=Math.log2(remainingTeamsCount)){
-          rounds[currRound-1].seeds.push(
+      for(let i= Math.log2(tournamentData && tournamentData.teams.length), currRound=1,currMatch=0 ; i>=1 ; i--,currRound++){
+        rounds.push({title: `round ${currRound}`,seeds:[]});
+        for (let j=0; j< Math.pow(2,i)/2; j++, currMatch++)
+          if(i>=Math.log2(remainingTeamsCount)){
+            rounds[currRound-1].seeds.push(
+              {
+                id:i,
+                date:new Date().toDateString(),
+                teams:[{name:tournamentData.teamMatches[currMatch].team1.name, status:tournamentData.teamMatches[currMatch].team1.status, id:tournamentData.teamMatches[currMatch].team1._id},
+                        {name:tournamentData.teamMatches[currMatch].team2.name, status:tournamentData.teamMatches[currMatch].team2.status, id:tournamentData.teamMatches[currMatch].team2._id}]
+              })
+        }else if(i!==0){
+            rounds[currRound-1].seeds.push(
             {
               id:i,
               date:new Date().toDateString(),
-              teams:[{name:tournamentData.teamMatches[currMatch].team1.name, status:tournamentData.teamMatches[currMatch].team1.status, id:tournamentData.teamMatches[currMatch].team1._id},
-                      {name:tournamentData.teamMatches[currMatch].team2.name, status:tournamentData.teamMatches[currMatch].team2.status, id:tournamentData.teamMatches[currMatch].team2._id}]
+              teams:[{name:`----`},{name:`----`}]
             })
-      }else if(i!==0){
-          rounds[currRound-1].seeds.push(
-          {
-            id:i,
-            date:new Date().toDateString(),
-            teams:[{name:`----`},{name:`----`}]
-          })
-      }else{
-      rounds[currRound-1].seeds.push(
-          {
-            id:i,
-            date:new Date().toDateString(),
-            teams:[{name:`----`},{name:`----`}]
-          })
+        }else{
+        rounds[currRound-1].seeds.push(
+            {
+              id:i,
+              date:new Date().toDateString(),
+              teams:[{name:`----`},{name:`----`}]
+            })
+      }
     }
-  }
-}
+
+        }
+    }else{
+      if(tournamentData.playerMatches.length!=0){
+
+        let remainingPlayersCount=0;
+        for(let i= 0;i <tournamentData.players.length;i++)
+          if(tournamentData.players[i].status==="remaining")
+            remainingPlayersCount++;
+
+      for(let i= Math.log2(tournamentData && tournamentData.players.length), currRound=1,currMatch=0 ; i>=1 ; i--,currRound++){
+        rounds.push({title: `round ${currRound}`,seeds:[]});
+        for (let j=0; j< Math.pow(2,i)/2; j++, currMatch++)
+          if(i>=Math.log2(remainingPlayersCount)){
+            rounds[currRound-1].seeds.push(
+              {
+                id:i,
+                date:new Date().toDateString(),
+                players:[{name:tournamentData.playerMatches[currMatch].player1.userName, status:tournamentData.playerMatches[currMatch].player1.status, id:tournamentData.playerMatches[currMatch].player1._id},
+                         {name:tournamentData.playerMatches[currMatch].player2.userName, status:tournamentData.playerMatches[currMatch].player2.status, id:tournamentData.playerMatches[currMatch].player2._id}]
+              })
+        }else if(i!==0){
+            rounds[currRound-1].seeds.push(
+            {
+              id:i,
+              date:new Date().toDateString(),
+              players:[{name:`----`},{name:`----`}]
+            })
+        }else{
+        rounds[currRound-1].seeds.push(
+            {
+              id:i,
+              date:new Date().toDateString(),
+              players:[{name:`----`},{name:`----`}]
+            })
+      }
+    }
+
+        }
+    }
+
   return (
     <div className="selection:bg-violet-700/70 font-custom bg-[url('../../public/bg2.png')] bg-repeat pt-10 flex flex-col justify-center items-center ">
     <NavBar />
-    {/* create cancel tournament button and it'll chagne the tournament status to canceled */}
-
-
     {/* tournament brackets */}
     <div className="flex flex-row text-black ml-10 w-[1400px] justify-center bg-[url('../../public/bg1.png')] bg-repeat pt-3 rounded-2xl shadow-2xl ">
         <Bracket rounds={rounds}  roundTitleComponent={(title , roundIndex) => {

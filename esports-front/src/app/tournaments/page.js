@@ -94,6 +94,8 @@ const Tournament = () => {
         }
         const createTournamentResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/createTournament",options)
         const createTournamentData = await createTournamentResponse.json();
+        setTournamentsData([...tournamentsData, createTournamentData.createdTournament]);
+        setShowCreateTournament(false);
         alertInfo(createTournamentData.message);
       }catch(err){
         alertError(err.message);
@@ -151,7 +153,6 @@ const Tournament = () => {
           :
             tournament.status==="upcoming"?
               tournament.isTeamMatch?
-                tournament.numberOfTeams!==tournament.teams.length?
                   haveToken?
                   // send tournament id
                     <Link className="w-48 m-auto transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 bg-[url('../../public/bg2.png')] bg-repeat mb-5 mt-3 text-center font-bold text-2xl rounded-full border-4 border-violet-500 hover:border-violet-800" href={{
@@ -160,8 +161,6 @@ const Tournament = () => {
                     }}>Join now</Link>
                   :
                   <Link className="w-48 m-auto transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 bg-[url('../../public/bg2.png')] bg-repeat mb-5 mt-3 text-center font-bold text-2xl rounded-full border-4 border-violet-500 hover:border-violet-800" href={"/signUpIn"}>Join now</Link>
-                :
-                <div>tournament is full </div>
               :
               tournament.numberOfPlayers!==tournament.players.length?
               haveToken?

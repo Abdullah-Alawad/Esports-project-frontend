@@ -12,11 +12,22 @@ import icon6 from '../../../public/mini4-t.png'
 import icon7 from '../../../public/mini19.png'
 const Profile = () => {
     const [userData, setUserData] = useState({});
+    const [showUpdateProfile, setShowUpdateProfile] = useState(false);
+    const [errors,setErrors] = useState({});
 
     useEffect(()=>{
       getUserData();
     }
   ,[])
+
+  const handleInputChange = (e) => {
+    const propertyName = e.target.name;
+    const propertyValue = e.target.value;
+    setUserData(
+      {...userData, [propertyName]:propertyValue }
+    )
+    console.log(userData);
+  };
 
     const yearOfBirth = userData.dateOfBirth? userData.dateOfBirth.toString().substring(0, 4) : null;
     const monthOfBirth = userData.dateOfBirth? userData.dateOfBirth.toString().substring(5, 7) : null;
@@ -29,6 +40,8 @@ const Profile = () => {
     return (
       <div className=" selection:bg-violet-700/70 font-custom bg-[url('../../public/bg2.png')] bg-repeat pt-10">
         <NavBar />
+        {!showUpdateProfile?
+        <>
         <div className='flex justify-between'>
           <div className='flex flex-col justify-between'>
             <div>
@@ -66,6 +79,26 @@ const Profile = () => {
             </div>
           </div>
         </div>
+        <button onClick={()=>setShowUpdateProfile(true)}>Edit profile</button>
+        </>:
+        <div>
+          <form onSubmit={handleUpdateProfileSubmit}>
+              <div className="flex gap-5">
+                <label>Name</label>
+                <input type="text" className="bg-[url('../../public/bg2.png')] bg-repeat p-1 rounded-xl shadow-2xl text-black" value={userData.userName} name="userName" onChange={handleInputChange}/>
+                {userData.userName &&<div className='text-xl text-red-900 max-w-[530px]'>{errors.userName}</div>}
+              </div>
+
+              <div className="flex gap-5">
+                <label>Phone number</label>
+                <input type="text" className="bg-[url('../../public/bg2.png')] bg-repeat p-1 rounded-xl shadow-2xl text-black" value={userData.phoneNumber} name="phoneNumber" onChange={handleInputChange}/>
+                {userData.phoneNumber &&<div className='text-xl text-red-900 max-w-[530px]'>{errors.phoneNumber}</div>}
+              </div>
+              <input type='submit' className='cursor-pointer'/>
+          </form>
+          <button onClick={()=>setShowUpdateProfile(false)}>Back to profile</button>
+        </div>
+        }
         <Footer />
       </div>
     )
@@ -84,6 +117,58 @@ const Profile = () => {
     console.log(userData)
     setUserData(userData);
   }
+
+ 
+
+  async function handleUpdateProfileSubmit(e){
+    e.preventDefault();
+    const errors ={};
+    if(userData.userName.length < 6 || userData.userName.length > 25){
+      errors.userName = 'Username must be between 6 and 25 characters*';
+    }else{
+      delete errors.userName;
+    }
+
+    if (!/^07[789]\d{7}$/.test(userData.phoneNumber)) {
+      errors.phoneNumber = 'Phone number must be in the format 07[7,8,9]XXXXXXX*';
+    }
+    else{
+      delete errors.phoneNumber;
+    }
+
+    setErrors({...errors});
+
+    if( Object.keys(errors).length < 1)
+      {
+        const token = localStorage.getItem("token");
+        const options={
+        method:"PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "access-control-allow-origin" : "*",
+            authorization:token
+          },
+        body: JSON.stringify(userData)
+      }
+      try{
+        const editUserDataResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/editProfile",options);
+        const updatedUserData = await editUserDataResponse.json();
+        if(editUserDataResponse.status===200)
+          {
+            setUserData(updatedUserData);
+            alert("info updated successufully");
+            setShowUpdateProfile(false);
+          }else{
+            alert("please check that the data you entered is correct");
+          }
+      }catch(err){
+        alert(err.message);
+      }
+    }else{
+      alert("please check that the data you entered is correct");
+    }
+  }
+
 }
 
 

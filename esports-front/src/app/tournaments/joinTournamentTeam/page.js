@@ -51,7 +51,7 @@ const JoinTournament = () => {
           <div className='flex gap-5'>
           {teamsCards}
           </div>
-          {<button className="rounded-2xl text-xl border-8 border-violet-400 hover:border-violet-800 text-slate-200 transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 font-bold p-3 bg-[url('../../public/bg1.png')] bg-repeat" onClick={()=>setShowAddTeam(true)}>Add Team</button>}
+          {(tournamentData.teams && (tournamentData.teams.length !== tournamentData.numberOfTeams))&&<button  className="rounded-2xl text-xl border-8 border-violet-400 hover:border-violet-800 text-slate-200 transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 font-bold p-3 bg-[url('../../public/bg1.png')] bg-repeat" onClick={()=>setShowAddTeam(true)}>Add Team</button>}
         </div>:
         // add tournament form here
         <div className='flex flex-col gap-8'> 
@@ -74,7 +74,7 @@ const JoinTournament = () => {
   async function getTournamentsData(tournamentId){
     const tournamentResponse = await fetch(`https://esports-project-backend-production.up.railway.app/tournament/tournament/${tournamentId}`)
     const tournamentData = await tournamentResponse.json();
-    console.log(tournamentData.teams);
+    console.log(tournamentData);
     setTournamentData(tournamentData);
   }
 
@@ -101,6 +101,9 @@ const JoinTournament = () => {
       }
       const addTeamResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/addTeam",options);
       const addTeamData = await addTeamResponse.json();
+      const updatedTournamentData = tournamentData;
+      updatedTournamentData.teams.push(addTeamData.newTeam);
+      setTournamentData(updatedTournamentData);
       alertSuccess("team created successfully");
       setShowAddTeam(false);
     }catch(err){
