@@ -1,5 +1,7 @@
 "use client"
 import React, { useContext, useState } from 'react'
+import { ToastContainer, toast } from 'react-custom-alert';
+import 'react-custom-alert/dist/index.css';
 import Image from 'next/image';
 import poster from "../../../public/poster1.png"
 import logo from "../../../public/controller-t.png"
@@ -7,6 +9,9 @@ import { TokenContext } from "../layout";
 import { useRouter } from 'next/navigation'
 
 const SignUpIn = () => {
+  const alertWarning = (message) => toast.warning(message);
+  const alertSuccess = (message) => toast.success(message);
+
   const router = useRouter();
   const [signInData, setSignInData] = useState({});
   const [signUpData, setSignUpData] = useState({
@@ -101,9 +106,12 @@ const SignUpIn = () => {
       if(signUpResponse.status===200){
         localStorage.setItem("token",token);
         setHaveToken(true);
-        router.push('/')}
-        else
-        alert("f off");
+        router.push('/')
+        alertSuccess("Signed up Successfully!")
+      }
+        else{
+        alertWarning("Please check that the data you entered are correct");
+        }
         }catch(err ){
           console.log(err);
         }
@@ -126,9 +134,10 @@ const SignUpIn = () => {
       if(signInResponse.status===200){
     localStorage.setItem("token",token);
     setHaveToken(true);
-    router.push('/')}
+    router.push('/')
+    alertSuccess("Signed in Successfully!")}
     else
-    alert("f off");
+    alertWarning('Wrong email or password');
     }catch(err ){
       console.log(err);
     }

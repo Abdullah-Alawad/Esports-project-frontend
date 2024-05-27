@@ -1,6 +1,8 @@
 "use client"
 import Link from 'next/link'
 import React from 'react'
+import { ToastContainer, toast } from 'react-custom-alert';
+import 'react-custom-alert/dist/index.css';
 import logo from '../../../public/logo-t.png'
 import profile from '../../../public/profile.png'
 import signout from '../../../public/logout1.png'
@@ -14,6 +16,9 @@ import { TokenContext } from "../layout";
 import { useContext, useState, useEffect } from 'react';
 
 const NavBar = () => {
+
+  const alertSuccess = (message) => toast.success(message);
+
   const {haveToken, setHaveToken} = useContext(TokenContext)
   const [hovered, setHovered] = useState(false);
   const [hoveredSignout, setHoveredSignout] = useState(false);
@@ -28,6 +33,7 @@ const NavBar = () => {
   const [filteredTournaments, setFilteredTournaments] = useState([]);
 
   const handleSearchChange = (e) => {
+    
     const query = e.target.value;
     setSearchQuery(query);
 
@@ -58,7 +64,7 @@ const NavBar = () => {
 
   return (
     <div className="flex justify-center z-50">
-         <div className=" selection:bg-violet-700/70 bg-[url('../../public/bg1.png')] bg-repeat rounded-full ml-5 px-1 py-1 max-w-[170px] z-10 border-y-8 border-l-8 border-r-8 border-violet-900/25 shadow-2xl" >
+         <div className=" selection:bg-violet-700/70 bg-[url('../../public/bg1.png')] bg-repeat rounded-full ml-5 px-1 py-1 max-w-[170px] z-50 border-y-8 border-l-8 border-r-8 border-violet-900/25 shadow-2xl" >
           <Link href={"/"}><Image src={logo} width={160} className='transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300'/></Link>
          </div>
          
@@ -106,7 +112,7 @@ const NavBar = () => {
             <input
               type="text"
               placeholder="Search for game..."
-              className="bg-[url('../../public/bg2.png')] bg-repeat py-3 pl-2 shadow-2xl rounded-2xl text-xl font-bold placeholder-slate-200"
+              className="bg-[url('../../public/bg2.png')] -translate-y-2 bg-repeat py-3 pl-2 shadow-2xl rounded-xl border-4 border-violet-400 hover:border-violet-800 text-xl font-bold placeholder-slate-200"
               value={searchQuery}
               onChange={handleSearchChange}
             />
@@ -129,7 +135,7 @@ const NavBar = () => {
           {/* make this conditional rendering based on if user signed in */}
           <div className='flex gap-8 font-extrabold text-3xl mr-10 text-black'>
             {haveToken &&<Link href={"/profile"} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}  className=' hover:text-slate-200'>
-              <div className={`transition-transform duration-1000 ${hovered ? '-translate-x-12' : 'translate-x-24'} ${hoveredSignout ? '-translate-x-16' : ''}`}>
+              <div className={`transition-transform duration-1000 ${hovered ? '-translate-x-12' : 'translate-x-24'} ${hoveredSignout ? 'opacity-0' : ''}`}>
                 <Image src={profile} alt="Profile" title='Profile' width={50} height={50}/>
               </div>
               <div className={`transition-opacity duration-1000 ml-2 ${hovered ? 'opacity-100' : 'opacity-0'}  -translate-y-11`}>
@@ -138,15 +144,15 @@ const NavBar = () => {
             </Link>}
 
             {!haveToken &&<Link href={"/signUpIn"} onMouseEnter={() => setHoveredSignin(true)} onMouseLeave={() => setHoveredSignin(false)} className=' hover:text-slate-200'>
-              <div className={`transition-transform duration-1000 ${hoveredSignin ? '-translate-x-12' : 'translate-x-10'}`}>
-                <Image src={signin} alt="signin" title='sign in' width={50} height={50}/>
+              <div className={`transition-transform duration-1000 ${hoveredSignin ? '-translate-x-12' : ''} `}>
+                <Image src={signin} alt="signin" title='sign in' className={``} width={50} height={50}/>
               </div>
               <div className={`transition-opacity duration-1000 ml-2 ${hoveredSignin ? 'opacity-100' : 'opacity-0'} -translate-y-11`}>
                 Sign in
               </div>
             </Link>}
             
-            {haveToken &&<Link href={"/"} onMouseEnter={() => setHoveredSignout(true)} onMouseLeave={() => setHoveredSignout(false)} onClick={()=>{localStorage.removeItem("token"); setHaveToken(false)}} className=' hover:text-slate-200'>
+            {haveToken &&<Link href={"/"} onMouseEnter={() => setHoveredSignout(true)} onMouseLeave={() => setHoveredSignout(false)} onClick={()=>{localStorage.removeItem("token"); setHaveToken(false); alertSuccess("Signed out Successfully!")}} className=' hover:text-slate-200'>
               <div className={`transition-transform duration-1000 ${hoveredSignout ? '-translate-x-12' : 'translate-x-12'}`}>
                 <Image src={signout} alt="signout" width={80} height={80} className='-translate-y-3 mr-2'/>
               </div>

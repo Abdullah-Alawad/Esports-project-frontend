@@ -3,6 +3,8 @@ import React, { useRef } from "react";
 import emailjs from "@emailjs/browser";
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
+import { ToastContainer, toast } from 'react-custom-alert';
+import 'react-custom-alert/dist/index.css';
 import Image from "next/image";
 import icon1 from "../../../public/mini3-t.png"
 import icon2 from "../../../public/mini4-t.png"
@@ -10,6 +12,9 @@ import icon3 from "../../../public/mini12-t.png"
 import icon4 from "../../../public/mini10-t.png"
 
 const Contact = () => {
+
+  const alertSuccess = (message) => toast.success(message);
+
   const form = useRef();
 
   const sendEmail = (e) => {
@@ -24,8 +29,7 @@ const Contact = () => {
       )
       .then(
         (result) => {
-          console.log(result.text);
-          window.alert("Message sent successfully!")
+          alertSuccess("Message sent successfully")
         },
         (error) => {
           console.log(error.text);

@@ -2,6 +2,8 @@
 import { useEffect, useState, useContext } from "react";
 import { TokenContext } from "../layout";
 import React from 'react'
+import { ToastContainer, toast } from 'react-custom-alert';
+import 'react-custom-alert/dist/index.css';
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import Link from "next/link";
@@ -9,10 +11,18 @@ import Image from "next/image";
 import icon2 from "../../../public/mini4-t.png";
 import icon1 from "../../../public/mini3-t.png";
 import icon3 from "../../../public/tournament.png";
+import icon4 from "../../../public/mini13-t.png";
+import icon5 from "../../../public/mini14.png";
+import icon6 from "../../../public/mini26.png";
 
 
 
 const Tournament = () => {
+
+  const alertSuccess = (message) => toast.success(message);
+  const alertError = (message) => toast.error(message);
+  const alertInfo = (message) => toast.info(message);
+
   const [tournamentsData, setTournamentsData] = useState([]);
   const [showCreateTournament, setShowCreateTournament] = useState(false);
   const [newTournamentData, setNewTournamentData] = useState({
@@ -57,17 +67,17 @@ const Tournament = () => {
       const startDate = new Date(newTournamentData.StartDate);
 
       if (startDate <= today) {
-        alert("Start date must be greater than today's date.");
+        alertError("Start date must be greater than today's date.");
         return false;
       }
 
       if (parseInt(newTournamentData.duration) <= 0) {
-        alert("Duration must be greater than 0.");
+        alertError("Duration must be greater than 0.");
         return false;
       }
 
       if (!newTournamentData.image || !isURL(newTournamentData.image)) {
-        alert("Image must be a non-empty string in URL format.");
+        alertError("Image must be a non-empty string in URL format.");
         return false;
       }
 
@@ -84,9 +94,9 @@ const Tournament = () => {
         }
         const createTournamentResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/createTournament",options)
         const createTournamentData = await createTournamentResponse.json();
-        alert(createTournamentData.message);
+        alertInfo(createTournamentData.message);
       }catch(err){
-        alert(err.message);
+        alertError(err.message);
       }
 
     }
@@ -112,9 +122,9 @@ const Tournament = () => {
       try{  
       const joinResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/joinTournament",options);
       const joinData = await joinResponse.json();
-      alert(joinData.message)
+      alertInfo(joinData.message)
       }catch(err){
-        alert(err);
+        alertError(err);
       }
     }
 
@@ -125,6 +135,7 @@ const Tournament = () => {
         <h1 className="text-2xl font-bold text-center text-yellow-300">{tournament.game}</h1>
         <h1 className="text-xl font-semibold">Prize: {tournament.prize? <span className="font-bold">{tournament.prize}$</span>: <span>FREE</span>}</h1>
         <h1 className="text-xl font-semibold">Duration: <span className="font-bold">{tournament.duration}</span></h1>
+        <h1 className="text-xl font-semibold">Date: <span className="font-bold">{tournament.StartDate.substring(0,10)}</span></h1>
         {/* show more info about tournament */}
         
         {/* change stat based on have token and duration and time */}
@@ -167,8 +178,11 @@ const Tournament = () => {
      }) 
 
   return (
-    <div className="selection:bg-violet-700/70 font-custom bg-[url('../../public/bg2.png')] bg-repeat pt-10 flex flex-col items-center">
+    <div className="selection:bg-violet-700/70 relative font-custom bg-[url('../../public/bg2.png')] bg-repeat pt-10 flex flex-col items-center">
     <NavBar />
+        <Image src={icon4} alt="image" className="absolute -rotate-12 -translate-x-[560px] translate-y-[210px]"/>
+        <Image src={icon5} alt="image" className="absolute -rotate-12 -translate-x-[700px] translate-y-[210px]"/>
+        <Image src={icon6} alt="image" className="absolute rotate-12 translate-x-[700px] translate-y-[210px]"/>
         <div className="flex flex-row justify-center">
           <Image src={icon1} width={90} height={70} />
           <div className="font-extrabold text-6xl text-center translate-y-4">Tournaments</div>

@@ -27,6 +27,7 @@ export default function Home() {
     <h1 className="text-2xl font-bold text-center text-yellow-300">{tournament.game}</h1>
     <h1 className="text-xl font-semibold">Prize: {tournament.prize? <span className="font-bold">{tournament.prize}$</span>: <span>FREE</span>}</h1>
     <h1 className="text-xl font-semibold">Duration: <span className="font-bold">{tournament.duration}</span></h1>
+    <h1 className="text-xl font-semibold">Date: <span className="font-bold">{tournament.StartDate.substring(0,10)}</span></h1>
     {/* show more info about tournament */}
     </div>
    }) 
