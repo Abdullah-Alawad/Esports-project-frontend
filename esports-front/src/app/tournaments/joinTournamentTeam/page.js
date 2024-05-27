@@ -95,6 +95,9 @@ const JoinTournament = () => {
       const addTeamResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/addTeam",options);
       const addTeamData = await addTeamResponse.json();
       alert("team created successfully");
+      const updatedTournamentData = tournamentData;
+      updatedTournamentData.teams.push(addTeamData.newTeam);
+      setTournamentData(updatedTournamentData);
       setShowAddTeam(false);
     }catch(err){
       console.log(err.message);
