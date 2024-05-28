@@ -81,6 +81,12 @@ const Tournament = () => {
         return false;
       }
 
+      //change date
+      
+      let modifiedTime =new Date();
+      modifiedTime.setHours(modifiedTime.getHours() + 3);
+      newTournamentData.StartDate = modifiedTime;
+
       try{
         const token = localStorage.getItem("token");
         const options = {
@@ -277,6 +283,7 @@ const Tournament = () => {
   async function getTournamentsData(){
     const tournamentResponse1 = await fetch("https://esports-project-backend-production.up.railway.app/tournament/tournaments");
     const tournamentData1 = await tournamentResponse1.json();
+    console.log(tournamentData1)
     //check tournaments dates
     for(let i = 0; i < tournamentData1.length;i++){
       if(new Date()>= new Date(tournamentData1[i].StartDate) &&(tournamentData1[i].status!=='canceled' && tournamentData1[i].status !=="finished")){
