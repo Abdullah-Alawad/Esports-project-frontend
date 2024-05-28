@@ -1,6 +1,7 @@
 "use client"
 import { redirect } from 'next/dist/server/api-utils';
 import React from 'react'
+import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-custom-alert';
 import 'react-custom-alert/dist/index.css';
@@ -70,7 +71,7 @@ const Tournament = () => {
     const playerRoleResponse = await fetch(`https://esports-project-backend-production.up.railway.app/user/playerRole/${window.location.href.split("=")[1]}`,options)
     const playerRoleData = await playerRoleResponse.json();
     if(!playerRoleData.role){
-      //redirect
+      router.push("/tournaments")
       alertWarning("You are not registered in this tournment");
     }
     setPlayerRole(playerRoleData.role);
@@ -89,9 +90,9 @@ const Tournament = () => {
         body: JSON.stringify(tournamentData)
       }
       const cancelTournamentResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/editTournament/",options)
+      router.push("/tournaments")
       alertSuccess("canceled successfully");
       router.push("/")
-      //redirect to tournaments page
     }catch(err){
       console.log(err);
     }
@@ -119,8 +120,8 @@ const Tournament = () => {
         body: JSON.stringify(tournamentData)
       }
       const createMatchRespnose = await fetch("https://esports-project-backend-production.up.railway.app/user/editTournament/",options)
+      router.push("/touurnaments")
       alertSuccess("match created successfully");
-      //redirect to tournaments page
     }catch(err){
       console.log(err);
     }
@@ -351,8 +352,8 @@ const Tournament = () => {
       <button className="border-8 border-slate-200 hover:border-violet-700 shadow-2xl mt-4 mb-5 font-bold text-2xl text-red-800 transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 bg-[url('../../public/bg1.png')] bg-repeat p-3 rounded-xl" onClick={handleCancelTournament}>Cancel tournament</button>
       {tournamentData&&
         tournamentData.isTeamMatch?
-        tournamentData.teamMatches&&tournamentData.teamMatches.length===0 &&<button className='bg-blue-600 p-3 rounded-xl' onClick={handleStartTournament}>Start tournament</button>
-          :tournamentData.playerMatches&&tournamentData.playerMatches.length===0 &&<button className='bg-blue-600 p-3 rounded-xl' onClick={handleStartTournament}>Start tournament</button>
+        tournamentData.teamMatches&&tournamentData.teamMatches.length===0 &&<button className=" border-8 border-slate-200 hover:border-violet-700 shadow-2xl mt-4 mb-5 font-bold text-2xl text-slate-200 transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 bg-[url('../../public/bg1.png')] bg-repeat p-3 rounded-xl" onClick={handleStartTournament}>Start tournament</button>
+          :tournamentData.playerMatches&&tournamentData.playerMatches.length===0 &&<button className=" border-8 border-slate-200 hover:border-violet-700 shadow-2xl mt-4 mb-5 font-bold text-2xl text-slate-200 transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 bg-[url('../../public/bg1.png')] bg-repeat p-3 rounded-xl" onClick={handleStartTournament}>Start tournament</button>
        }
     </div>}
     <Footer />
