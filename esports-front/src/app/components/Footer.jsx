@@ -27,11 +27,16 @@ function Footer(){
                   <Link href={`/contact`}><p className="text-l hover:underline hover:underline-offset-4">Contact Page</p></Link>
               </div>
             </div>
-            <div className="text-3xl font-bold text-center translate-y-10">
+            <div>
+              <div className="text-2xl mt-3 text-yellow-300"><b>Register</b></div>
+              <div className="text-l hover:underline hover:underline-offset-4 "><Link href="/signUpIn"><p>Sign up</p></Link></div>
+            </div>
+            <div className="text-3xl font-bold text-center translate-y-4">
               Graduation Project Second Semester 2024
               <br />
               <div className="text-xl font-extrabold text-yellow-300">Supervised by Dr. Mohammad Abushariah</div>
             </div>
+
           </div>
               
           <div className="m-10">

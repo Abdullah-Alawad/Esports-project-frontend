@@ -67,7 +67,7 @@ const Contact = () => {
             <label className="mr-3 font-bold text-3xl">Message</label>
             <textarea name="message" className="text-slate-200 font-bold text-xl pl-3 mt-3 bg-[url('../../public/bg1.png')] bg-repeat min-h-40 min-w-[600px] rounded-xl border-4 border-violet-900/35"/>
           </div>
-          <input type="submit" value="Send" className="font-extrabold text-4xl text-slate-200 bg-[url('../../public/bg1.png')] bg-repeat translate-x-16 px-5 my-3 py-2 rounded-xl border-4 border-violet-400/20 hover:border-violet-900/65 hover:cursor-pointer"/>
+          <input type="submit" value="Send" className="translate-x-10 border-8 border-slate-200 hover:border-violet-700 shadow-2xl mt-4 mb-5 font-bold text-2xl text-slate-200 transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 bg-[url('../../public/bg1.png')] bg-repeat p-3 px-4 rounded-2xl"/>
         </form>
       </div>
       <Footer />

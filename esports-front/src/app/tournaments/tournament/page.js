@@ -371,8 +371,8 @@ const Tournament = () => {
       <button className="border-8 border-slate-200 hover:border-violet-700 shadow-2xl mt-4 mb-5 font-bold text-2xl text-red-800 transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 bg-[url('../../public/bg1.png')] bg-repeat p-3 rounded-xl" onClick={handleCancelTournament}>Cancel tournament</button>
       {tournamentData&&
         tournamentData.isTeamMatch?
-        tournamentData.teamMatches&&tournamentData.teamMatches.length===0 &&<button className='bg-blue-600 p-3 rounded-xl' onClick={handleStartTournament}>Start tournament</button>
-          :tournamentData.playerMatches&&tournamentData.playerMatches.length===0 &&<button className='bg-blue-600 p-3 rounded-xl' onClick={handleStartTournament}>Start tournament</button>
+        tournamentData.teamMatches&&tournamentData.teamMatches.length===0 &&<button className=" border-8 border-slate-200 hover:border-violet-700 shadow-2xl mt-4 mb-5 font-bold text-2xl text-slate-200 transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 bg-[url('../../public/bg1.png')] bg-repeat p-3 rounded-xl" onClick={handleStartTournament}>Start tournament</button>
+          :tournamentData.playerMatches&&tournamentData.playerMatches.length===0 &&<button className=" border-8 border-slate-200 hover:border-violet-700 shadow-2xl mt-4 mb-5 font-bold text-2xl text-slate-200 transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 bg-[url('../../public/bg1.png')] bg-repeat p-3 rounded-xl" onClick={handleStartTournament}>Start tournament</button>
        }
     </div>}
     <Footer />
