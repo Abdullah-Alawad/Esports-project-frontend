@@ -8,7 +8,6 @@ import 'react-custom-alert/dist/index.css';
 import NavBar from '@/app/components/NavBar';
 import Footer from '@/app/components/Footer';
 import { Bracket, RoundProps, Seed, SeedItem, SeedTeam, RenderSeedProps  } from '@sportsgram/brackets';
-import { useRouter } from 'next/navigation';
 
 const Tournament = () => {
   const router = useRouter();
