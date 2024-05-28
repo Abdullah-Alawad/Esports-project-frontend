@@ -7,9 +7,10 @@ import 'react-custom-alert/dist/index.css';
 import NavBar from '@/app/components/NavBar';
 import Footer from '@/app/components/Footer';
 import { Bracket, RoundProps, Seed, SeedItem, SeedTeam, RenderSeedProps  } from '@sportsgram/brackets';
+import { useRouter } from 'next/navigation';
 
 const Tournament = () => {
-
+  const router = useRouter();
   const alertWarning = (message) => toast.warning(message);
   const alertSuccess = (message) => toast.warning(message);
 
@@ -89,6 +90,7 @@ const Tournament = () => {
       }
       const cancelTournamentResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/editTournament/",options)
       alertSuccess("canceled successfully");
+      router.push("/")
       //redirect to tournaments page
     }catch(err){
       console.log(err);
@@ -96,6 +98,7 @@ const Tournament = () => {
   }
 
   async function handleStartTournament(){
+    try{
     if(tournamentData.isTeamMatch){
       for(let i=0;i< tournamentData.teams.length; i+=2){
         tournamentData.teamMatches.push({team1:tournamentData.teams[i], team2: tournamentData.teams[i+1]})
@@ -103,10 +106,9 @@ const Tournament = () => {
   }
     else{
       for(let i=0;i< tournamentData.players.length; i+=2){
-        tournamentData.playerMatches.push({player1:tournamentData.players[i], player2: tournamentData.players[i+1]})
+        tournamentData.playerMatches.push({player1:tournamentData.players[i].player, player2:tournamentData.players[i+1].player});
       }
     }
-    try{
       const token = localStorage.getItem("token");
       const options = {
         method:"PUT",
@@ -143,21 +145,23 @@ const Tournament = () => {
     const tempTournamentData = tournamentData;
     try{
       tempTournamentData.players.map(player=>{
-        if(player._id === playerId)
+        if(player.player._id === playerId)
             player.status="lost";
       })
 
+      console.log(tempTournamentData);
       const options = {
         method:"PUT",
         headers:{
           "Content-Type":"application/json",
           authorization:token,
-          body:JSON.stringify(tempTournamentData)
         },
+        body:JSON.stringify(tempTournamentData)
       }
       
-      const playerLostResponse = await fetch(`https://esports-project-backend-production.up.railway.app/user/editTeam`,options);
+      const playerLostResponse = await fetch(`https://esports-project-backend-production.up.railway.app/user/editTournament`,options);
       const playerLostData = await playerLostResponse.json();
+      console.log(playerLostData)
       alert("Player lost")
     }catch(err){
       alert(err.message);
@@ -189,8 +193,8 @@ const Tournament = () => {
 
         for (let i = 0; i < remainingPlayers.length; i += 2) {
           tournamentData.playerMatches.push({
-            player1: remainingPlayers[i],
-            player2: remainingPlayers[i + 1]
+            player1: remainingPlayers[i].player,
+            player2: remainingPlayers[i + 1].player
           });
         }
       }
@@ -254,27 +258,6 @@ const Tournament = () => {
   }
 }
   
-  // if(Object.keys(tournamentData).length!==0)
-  // for(let i = Math.log2(tournamentData && tournamentData.teams.length), currRound=1, currTeam=0; i>=1;i--,currRound++){
-  //   rounds.push({title: `round ${currRound}`,seeds:[]});
-  //     for(let j = 0 ;j< Math.pow(2,i)/2 ;j++,currTeam++){
-  //       if(i>=Math.log2(remainingTeamsCount)){
-  //           rounds[currRound-1].seeds.push(
-  //             {
-  //               id:i,
-  //               date:new Date().toDateString(),
-  //               teams:[{name:tournamentData.teams[currTeam].name},{name:tournamentData.teams[currTeam+1].name}]
-  //             })
-  //       }else{
-  //           rounds[currRound-1].seeds.push(
-  //           {
-  //             id:i,
-  //             date:new Date().toDateString(),
-  //             teams:[{name:`----`},{name:`----`}]
-  //           })
-  //       }
-  //     }
-  // }
   const rounds=[];
   if(Object.keys(tournamentData).length!==0 )
     if(tournamentData.isTeamMatch){
@@ -330,8 +313,8 @@ const Tournament = () => {
               {
                 id:i,
                 date:new Date().toDateString(),
-                players:[{name:tournamentData.playerMatches[currMatch].player1.userName, status:tournamentData.playerMatches[currMatch].player1.status, id:tournamentData.playerMatches[currMatch].player1._id},
-                         {name:tournamentData.playerMatches[currMatch].player2.userName, status:tournamentData.playerMatches[currMatch].player2.status, id:tournamentData.playerMatches[currMatch].player2._id}]
+                players:[{name:tournamentData.playerMatches[currMatch].player1.username, status:getPlayerStatus(tournamentData.playerMatches[currMatch].player1._id), id:tournamentData.playerMatches[currMatch].player1._id},
+                         {name:tournamentData.playerMatches[currMatch].player2.username, status:getPlayerStatus(tournamentData.playerMatches[currMatch].player2._id), id:tournamentData.playerMatches[currMatch].player2._id}]
               })
         }else if(i!==0){
             rounds[currRound-1].seeds.push(
@@ -360,7 +343,7 @@ const Tournament = () => {
     <div className="flex flex-row text-black ml-10 w-[1400px] justify-center bg-[url('../../public/bg1.png')] bg-repeat pt-3 rounded-2xl shadow-2xl ">
         <Bracket rounds={rounds}  roundTitleComponent={(title , roundIndex) => {
         return <div style={{ textAlign: 'center', color: 'white', fontWeight: 'bolder', fontSize: '35px' }}>{title}</div>;
-      }} renderSeedComponent={teamSeed}/>
+      }} renderSeedComponent={customSeed}/>
     </div>
     {playerRole==="admin" && 
     <div className='flex gap-10'>
@@ -375,6 +358,15 @@ const Tournament = () => {
     <Footer />
     </div>
   )
+
+
+  function getPlayerStatus(playerId){
+    for(let i =0 ;i<tournamentData.players.length;i++){
+      if(tournamentData.players[i].player._id.toString() === playerId.toString())
+        return tournamentData.players[i].status;
+    }
+    return "remaining";
+  }
 
 }
 export default Tournament
