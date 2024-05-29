@@ -162,9 +162,9 @@ const Tournament = () => {
       const playerLostResponse = await fetch(`https://esports-project-backend-production.up.railway.app/user/editTournament`,options);
       const playerLostData = await playerLostResponse.json();
       console.log(playerLostData)
-      alert("Player lost")
+      alertSuccess("Player lost")
     }catch(err){
-      alert(err.message);
+      alertWarning(err.message);
     }
 }
 

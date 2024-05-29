@@ -12,8 +12,9 @@ import icon4 from '../../../public/mini8-t.png'
 import icon5 from '../../../public/mini3-t.png'
 import icon6 from '../../../public/mini4-t.png'
 import icon7 from '../../../public/mini19.png'
+import { useRouter } from 'next/navigation'
 const Profile = () => {
-
+    const router = useRouter();
     const alertSuccess = (message) => toast.success(message);
     const alertError = (message) => toast.error(message);
 
@@ -85,7 +86,10 @@ const Profile = () => {
             </div>
           </div>
         </div>
+        <div className = "flex gap-5">
         <button className=" w-[300px] ml-16 cursor-pointer mb-10 rounded-2xl text-2xl border-8 border-violet-400 hover:border-violet-800 text-slate-200 transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 font-bold p-3 bg-[url('../../public/bg1.png')] bg-repeat" onClick={()=>setShowUpdateProfile(true)}>Edit profile</button>
+        <button className=" w-[300px] ml-16 cursor-pointer mb-10 rounded-2xl text-2xl border-8 border-violet-400 hover:border-violet-800 text-red-800 transition ease-in-out delay-80 hover:-translate--1 hover:scale-110 duration-300 font-bold p-3 bg-[url('../../public/bg1.png')] bg-repeat" onClick={()=>handleDeleteProfile(userData._id)}>Delete profile</button>
+        </div>
         </div>:
         <div className='flex flex-col items-center'>
           <div className='font-extrabold text-6xl mb-5 flex flex-row'>
@@ -131,6 +135,32 @@ const Profile = () => {
     const userData = await userDataResponse.json();
     console.log(userData)
     setUserData(userData);
+  }
+
+  async function handleDeleteProfile(userId){
+    const token = localStorage.getItem("token");
+    try{
+    const options = {
+      method:"DELETE",
+      headers :{
+        "Content-Type":"application/json",
+        "access-control-allow-origin" : "*",
+        authorization:token
+      }
+    }
+
+    const deleteUserResponse = await fetch("https://esports-project-backend-production.up.railway.app/user/deleteProfile",options)
+    const deleteUserData = await deleteUserResponse.json();
+    if(deleteUserResponse.status ===200){
+      localStorage.removeItem("token");
+      alertSuccess("Profile deleted successfully");
+      router.push("/")
+    }else{
+      alertError("an error occured")
+    }
+  }catch(err){
+    alertError(err.message);
+  }
   }
 
  

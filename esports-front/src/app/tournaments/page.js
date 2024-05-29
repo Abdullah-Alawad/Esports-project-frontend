@@ -83,9 +83,9 @@ const Tournament = () => {
 
       //change date
       
-      let modifiedTime =new Date();
-      modifiedTime.setHours(modifiedTime.getHours() + 3);
-      newTournamentData.StartDate = modifiedTime;
+      // let modifiedTime =new Date();
+      // modifiedTime.setHours(modifiedTime.getHours() + 3);
+      // newTournamentData.StartDate = modifiedTime;
 
       try{
         const token = localStorage.getItem("token");
